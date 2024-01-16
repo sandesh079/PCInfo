@@ -1,66 +1,94 @@
-'use client'
-import React from 'react';
-import { Formik, Form, Field } from 'formik';
-import * as Yup from 'yup';
+"use client";
+import { Formik, Field, Form } from "formik";
+import * as Yup from "yup";
 
+// Define the validation schema
 const SignupSchema = Yup.object().shape({
-  fullName: Yup.string()
-    .min(2, 'Too Short!')
-    .max(50, 'Too Long!')
-    .required('Required'),
-  phoneNumber: Yup.string()
-    .min(8, 'Too Short!')
-    .max(20, 'Too Long!')
-    .required('Required'),
-  email: Yup.string().email('Invalid email').required('Required'),
+  fullName: Yup.string().required("Full name is required"),
+  phoneNumber: Yup.string().required("Phone number is required"),
+  email: Yup.string().email("Invalid email").required("Email is required"),
   password: Yup.string()
-  .min(4, 'Too Short!')
-  .max(30, 'Too Long!')
-  .required('Required')
+    .min(6, "Password must be at least 6 characters")
+    .required("Password is required"),
 });
 
-const ValidationSchemaExample = () => (
-  <div>
-    <h1>Signup</h1>
-    <Formik
-      initialValues={{
-        firstName: '',
-        lastName: '',
-        email: '',
-      }}
-      validationSchema={SignupSchema}
-      onSubmit={values => {
-        // same shape as initial values
-        console.log(values);
-      }}
-    >
-      {({ errors, touched }) => (
-        <Form>
-          <Field name="fullName" placeholder="enter your fullname"/>
-          {errors.fullName && touched.fullName ? (
-            <div>{errors.fullName}</div>
-          ) : null}
-          <br/>
-          <br/>
-          <Field name="phoneNumber" placeholder="enter your phone number"/>
-          {errors.phoneNumber && touched.phoneNumber ? (
-            <div>{errors.phoneNumber}</div>
-          ) : null}
-          <br/>
-          <br/>
-          <Field name="email" type="email" placeholder="enter your email"/>
-          {errors.email && touched.email ? <div>{errors.email}</div> : null}
-          <br/>
-          <br/>
-          <Field name="password" type="password" placeholder="enter your password"/>
-          {errors.password && touched.password ? <div>{errors.password}</div> : null}
-          <br/>
-          <br/>
-          <button type="submit">Submit</button>
-        </Form>
-      )}
-    </Formik>
-  </div>
-);
+const page = () => {
+  return (
+      <div className="flex w-full justify-center h-[90vh] items-center">
+        <Formik
+          initialValues={{
+            fullName: "",
+            phoneNumber: "",
+            email: "",
+            password: "",
+          }}
+          validationSchema={SignupSchema}
+          onSubmit={(values) => {
+            // same shape as initial values
+            console.log(values);
+          }}
+        >
+          {({ errors, touched }) => (
+            <Form className="bg-slate-50 shadow-2xl p-10 rounded-lg" >
+              <div className="mb-4">
+                <Field
+                  name="fullName"
+                  type="text"
+                  placeholder="Enter your full name"
+                  className="w-[500px] p-3 border border-gray-300 rounded"
+                />
+                {errors.fullName && touched.fullName ? (
+                  <div className="text-red-500 mt-2">{errors.fullName}</div>
+                ) : null}
+              </div>
 
-export default ValidationSchemaExample
+              <div className="mb-4">
+                <Field
+                  name="phoneNumber"
+                  type="text"
+                  placeholder="Enter your phone number"
+                  className="w-full p-3 border border-gray-300 rounded"
+                />
+                {errors.phoneNumber && touched.phoneNumber ? (
+                  <div className="text-red-500 mt-2">{errors.phoneNumber}</div>
+                ) : null}
+              </div>
+
+              <div className="mb-4">
+                <Field
+                  name="email"
+                  type="email"
+                  placeholder="Enter your email"
+                  className="w-full p-3 border border-gray-300 rounded"
+                />
+                {errors.email && touched.email ? (
+                  <div className="text-red-500 mt-2">{errors.email}</div>
+                ) : null}
+              </div>
+
+              <div className="mb-4">
+                <Field
+                  name="password"
+                  type="password"
+                  placeholder="Enter your password"
+                  className="w-full p-3 border border-gray-300 rounded"
+                />
+                {errors.password && touched.password ? (
+                  <div className="text-red-500 mt-2">{errors.password}</div>
+                ) : null}
+              </div>
+
+              <button
+                type="submit"
+                className="w-full bg-blue-500 text-white p-3 rounded hover:bg-blue-700 transition duration-300"
+              >
+                Register
+              </button>
+            </Form>
+          )}
+        </Formik>
+      </div>
+  );
+};
+
+export default page;
