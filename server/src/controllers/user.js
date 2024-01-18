@@ -5,5 +5,6 @@ const registerNewUser = async(req, res)=>{
         msg: "register successfully"
     })
 }
+
 module.exports = {registerNewUser}
 

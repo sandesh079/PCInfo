@@ -40,7 +40,6 @@ const page = () => {
           validationSchema={SignupSchema}
           onSubmit={(values) => {
             // same shape as initial values
-            console.log(values);
             handleRegister(values)
           }}
         
@@ -57,6 +56,7 @@ const page = () => {
                 {errors.fullName && touched.fullName ? (
                   <div className="text-red-500 mt-2">{errors.fullName}</div>
                 ) : null}
+                <br/>
               </div>
 
               <div className="mb-4">
@@ -78,7 +78,7 @@ const page = () => {
                   placeholder="Enter your email"
                   className="w-96 p-3 border border-gray-300 rounded"
                 />
-                {errors.email && touched.email ? (
+                {errors.email ? (
                   <div className="text-red-500 mt-2">{errors.email}</div>
                 ) : null}
               </div>
