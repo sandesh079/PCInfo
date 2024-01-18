@@ -11,6 +11,25 @@ const SignupSchema = Yup.object().shape({
 });
 
 const page = () => {
+  const handleLogin = async (values) => {
+    try {
+      const res = await fetch('http://localhost:5000/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json', // Set the content type to JSON
+        },
+        body: JSON.stringify({
+          email: values.email,
+          password: values.password,
+        }),
+      });
+      // Handle the response here (e.g., check for success or failure)
+
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+  
   return (
       <div className="flex w-full justify-center h-[90vh] items-center">
         <Formik
@@ -20,8 +39,8 @@ const page = () => {
           }}
           validationSchema={SignupSchema}
           onSubmit={(values) => {
-            // same shape as initial values
-            console.log(values);
+            handleLogin(values)
+
           }}
         >
           {({ errors, touched }) => (
@@ -32,11 +51,8 @@ const page = () => {
                   name="email"
                   type="email"
                   placeholder="Enter your email"
-                  className="w-full p-3 border border-gray-300 rounded"
+                  className="w-96 p-3 border border-gray-300 rounded"
                 />
-                {errors.email && touched.email ? (
-                  <div className="text-red-500 mt-2">{errors.email}</div>
-                ) : null}
               </div>
 
               <div className="mb-4">
@@ -44,16 +60,13 @@ const page = () => {
                   name="password"
                   type="password"
                   placeholder="Enter your password"
-                  className="w-full p-3 border border-gray-300 rounded"
+                  className="w-96 p-3 border border-gray-300 rounded"
                 />
-                {errors.password && touched.password ? (
-                  <div className="text-red-500 mt-2">{errors.password}</div>
-                ) : null}
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-blue-500 text-white p-3 rounded hover:bg-blue-700 transition duration-300"
+                className="w-40 ml-30 mt-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
               >
                 Login
               </button>

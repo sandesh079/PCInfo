@@ -1,11 +1,12 @@
 "use client";
 import { Formik, Field, Form } from "formik";
+import { Router } from "next/router";
 import * as Yup from "yup";
 
 // Define the validation schema
 const SignupSchema = Yup.object().shape({
-  fullName: Yup.string().required("Full name is required"),
-  phoneNumber: Yup.string().required("Phone number is required"),
+  fullName: Yup.string().required("Fullname is required"),
+  phoneNumber: Yup.string().required("Phonenumber is required"),
   email: Yup.string().email("Invalid email").required("Email is required"),
   password: Yup.string()
     .min(6, "Password must be at least 6 characters")
@@ -13,6 +14,20 @@ const SignupSchema = Yup.object().shape({
 });
 
 const page = () => {
+  const handleRegister = async (values) =>{
+    try{
+      const res = await fetch('http://localhost:5000/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values)
+      })
+    } catch(err){
+      console.log(err)
+    }
+    
+  }
   return (
       <div className="flex w-full justify-center h-[90vh] items-center">
         <Formik
@@ -26,7 +41,9 @@ const page = () => {
           onSubmit={(values) => {
             // same shape as initial values
             console.log(values);
+            handleRegister(values)
           }}
+        
         >
           {({ errors, touched }) => (
             <Form className="bg-slate-50 shadow-2xl p-10 rounded-lg" >
@@ -34,8 +51,8 @@ const page = () => {
                 <Field
                   name="fullName"
                   type="text"
-                  placeholder="Enter your full name"
-                  className="w-[500px] p-3 border border-gray-300 rounded"
+                  placeholder="Enter your fullname"
+                  className="w-96 p-3 border border-gray-300 rounded"
                 />
                 {errors.fullName && touched.fullName ? (
                   <div className="text-red-500 mt-2">{errors.fullName}</div>
@@ -46,8 +63,8 @@ const page = () => {
                 <Field
                   name="phoneNumber"
                   type="text"
-                  placeholder="Enter your phone number"
-                  className="w-full p-3 border border-gray-300 rounded"
+                  placeholder="Enter your phonenumber"
+                  className="w-96 p-3 border border-gray-300 rounded"
                 />
                 {errors.phoneNumber && touched.phoneNumber ? (
                   <div className="text-red-500 mt-2">{errors.phoneNumber}</div>
@@ -59,7 +76,7 @@ const page = () => {
                   name="email"
                   type="email"
                   placeholder="Enter your email"
-                  className="w-full p-3 border border-gray-300 rounded"
+                  className="w-96 p-3 border border-gray-300 rounded"
                 />
                 {errors.email && touched.email ? (
                   <div className="text-red-500 mt-2">{errors.email}</div>
@@ -71,7 +88,7 @@ const page = () => {
                   name="password"
                   type="password"
                   placeholder="Enter your password"
-                  className="w-full p-3 border border-gray-300 rounded"
+                  className="w-96 p-3 border border-gray-300 rounded"
                 />
                 {errors.password && touched.password ? (
                   <div className="text-red-500 mt-2">{errors.password}</div>
@@ -80,7 +97,7 @@ const page = () => {
 
               <button
                 type="submit"
-                className="w-full bg-blue-500 text-white p-3 rounded hover:bg-blue-700 transition duration-300"
+                className="w-40 ml-30 mt-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
               >
                 Register
               </button>
