@@ -48,15 +48,17 @@ Click the image above to watch a quick demo of our E-Commerce website.
 
 4. Create a .env file in the server directory and configure the necessary environment variables:
 
+   ```env
    MONGO_URI=your_mongodb_connection_string
    SECRET_KEY=your_secret_key_for_jwt
+   ```
 
-5. Run the server:
+6. Run the server:
 
    ```bash
    cd ../server && npm run dev
 
-6. Run the client:
+7. Run the client:
 
    ```bash
    cd ../client && npm run dev
