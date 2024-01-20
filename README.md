@@ -7,6 +7,7 @@ Welcome to our E-Commerce website project built with the MERN (MongoDB, Express.
 ## Table of Contents
 
 - [Features](#features)
+- [Demo](#demo)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Technologies Used](#technologies-used)
@@ -58,7 +59,7 @@ Click the image above to watch a quick demo of our E-Commerce website.
 6. Run the client:
 
    ```bash
-   cd ../client && npm start
+   cd ../client && npm run dev
 
 Visit http://localhost:3000 to access the application.
 
