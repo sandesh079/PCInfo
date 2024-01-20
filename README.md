@@ -36,5 +36,5 @@ Click the image above to watch a quick demo of our E-Commerce website.
 
 2. Change directory to the project folder:
 
-  ```bash
-  cd your-repo
+   ```bash
+   cd your-repo
