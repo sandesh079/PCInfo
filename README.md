@@ -38,3 +38,9 @@ Click the image above to watch a quick demo of our E-Commerce website.
 
    ```bash
    cd your-repo
+
+3. Install dependencies for both server and client:
+
+   ```bash
+   cd server && npm install
+   cd ../client && npm install
