@@ -9,14 +9,15 @@ const page = () => {
 
   const SignupSchema = Yup.object().shape({
     fullName: Yup.string().required("Fullname is required"),
-    phoneNumber: Yup.string().required("Phonenumber is required"),
+    phoneNumber: Yup.string().min(6, "Invalid Phonenumber").required("Phonenumber is required"),
     email: Yup.string().email("Invalid email").required("Email is required"),
     password: Yup.string()
       .min(6, "Password must be at least 6 characters")
       .required("Password is required"),
   });
   const handleRegister = async (values) => {
-    const res = await fetch("http://localhost:5000/api/register",
+    try {
+      const res = await fetch("http://localhost:5000/api/register",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -29,6 +30,10 @@ const page = () => {
       router.push("/login");
     }
     toast(data.msg);
+    } catch (error) {
+      console.error(error)
+    }
+  
   };
   return (
     <div className="flex w-full justify-center h-[90vh] items-center">

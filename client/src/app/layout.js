@@ -20,16 +20,8 @@ export default function RootLayout({ children }) {
         <Providers>
           <Navbar />
           <ToastContainer
-            position="top-right"
-            autoClose={5000}
             hideProgressBar
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="light"
+            theme="dark"
           />
           {children}
           <Footer />

@@ -1,9 +1,11 @@
 "use client";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
+import {  toast } from 'react-toastify';
+import { useRouter } from 'next/navigation'
 
 // Define the validation schema
-const SignInSchema = Yup.object().shape({ 
+const SignInSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email is required"),
   password: Yup.string()
     .min(6, "Password must be at least 6 characters")
@@ -11,68 +13,69 @@ const SignInSchema = Yup.object().shape({
 });
 
 const page = () => {
+  const router = useRouter()
   const handleLogin = async (values) => {
     try {
-      const res = await fetch('http://localhost:5000/login/', {
-        method: 'POST',
+      const res = await fetch("http://localhost:5000/api/login/", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json', 
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          email: values.email,
-          password: values.password,
-        }),
+        body: JSON.stringify(values),
       });
-      
+
+      const data = await res.json();
+      if (res.status == 200) {
+        router.push("/login");
+      }
+      toast(data.msg);
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
-  
+
   return (
-      <div className="flex w-full justify-center h-[90vh] items-center">
-        <Formik
-          initialValues={{
-            email: "",
-            password: "",
-          }}
-          validationSchema={SignInSchema}
-          onSubmit={(values) => {
-            handleLogin(values)
+    <div className="flex w-full justify-center h-[90vh] items-center">
+      <Formik
+        initialValues={{
+          email: "",
+          password: "",
+        }}
+        validationSchema={SignInSchema}
+        onSubmit={(values) => {
+          handleLogin(values);
+        }}
+      >
+        {({ errors, touched }) => (
+          <Form className="bg-slate-50 shadow-2xl p-10 rounded-lg">
+            <div className="mb-4">
+              <Field
+                name="email"
+                type="email"
+                placeholder="Enter your email"
+                className="w-96 p-3 border border-gray-300 rounded"
+              />
+            </div>
 
-          }}
-        >
-          {({ errors, touched }) => (
-            <Form className="bg-slate-50 shadow-2xl p-10 rounded-lg" >
+            <div className="mb-4">
+              <Field
+                name="password"
+                type="password"
+                placeholder="Enter your password"
+                className="w-96 p-3 border border-gray-300 rounded"
+              />
+            </div>
 
-              <div className="mb-4">
-                <Field
-                  name="email"
-                  type="email"
-                  placeholder="Enter your email"
-                  className="w-96 p-3 border border-gray-300 rounded"
-                />
-              </div>
-
-              <div className="mb-4">
-                <Field
-                  name="password"
-                  type="password"
-                  placeholder="Enter your password"
-                  className="w-96 p-3 border border-gray-300 rounded"
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="w-40 ml-30 mt-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-              >
-                Login
-              </button>
-            </Form>
-          )}
-        </Formik>
-      </div>
+            <button
+              type="submit"
+              className="w-40 ml-30 mt-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+            >
+              Login
+            </button>
+          </Form>
+        )}
+      </Formik>
+    </div>
   );
 };
 

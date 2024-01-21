@@ -30,11 +30,11 @@ const loginUser = async(req, res)=>{
             const match = await bcrypt.compare(req.body.password, userDetails.password)
             if(match){
                 res.json({
-                    msg: 'Login successful'
+                    msg: 'Login Successful'
                 })
             }else{
-                res.status(403).json({
-                    msg: 'Incorrect password'
+                res.json({
+                    msg: 'Incorrect Password'
                 })
             }
         }else{
