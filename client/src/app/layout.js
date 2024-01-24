@@ -5,6 +5,7 @@ import Navbar from "@/components/navbar/Navbar";
 import Footer from "@/components/footer/Footer";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ReduxProvider from "./redux/reduxProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,15 +18,14 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="">
       <body className={inter.className}>
-        <Providers>
-          <Navbar />
-          <ToastContainer
-            hideProgressBar
-            theme="dark"
-          />
-          {children}
-          <Footer />
-        </Providers>
+        <ReduxProvider>
+          <Providers>
+            <Navbar />
+            <ToastContainer hideProgressBar theme="dark" />
+            {children}
+            <Footer />
+          </Providers>
+        </ReduxProvider>
       </body>
     </html>
   );

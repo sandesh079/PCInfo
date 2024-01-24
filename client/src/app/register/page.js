@@ -56,7 +56,7 @@ const page = () => {
                 name="fullName"
                 type="text"
                 placeholder="Enter your fullname"
-                className="w-96 p-3 border border-gray-300 rounded"
+                className="w-auto p-3 border border-gray-300 rounded"
               />
               {errors.fullName && (
                 <div className="text-red-500">{errors.fullName}</div>
@@ -69,7 +69,7 @@ const page = () => {
                 name="phoneNumber"
                 type="text"
                 placeholder="Enter your phonenumber"
-                className="w-96 p-3 border border-gray-300 rounded"
+                className="w-auto p-3 border border-gray-300 rounded"
               />
               {errors.phoneNumber && (
                 <div className="text-red-500">{errors.phoneNumber}</div>
@@ -82,7 +82,7 @@ const page = () => {
                 name="email"
                 type="email"
                 placeholder="Enter your email"
-                className="w-96 p-3 border border-gray-300 rounded"
+                className="w-auto p-3 border border-gray-300 rounded"
               />
               {errors.email && (
                 <div className="text-red-500">{errors.email}</div>
@@ -94,7 +94,7 @@ const page = () => {
                 name="password"
                 type="password"
                 placeholder="Enter your password"
-                className="w-96 p-3 border border-gray-300 rounded"
+                className="w-auto p-3 border border-gray-300 rounded"
               />
               {errors.password && (
                 <div className="text-red-500">{errors.password}</div>
@@ -103,7 +103,7 @@ const page = () => {
 
             <button
               type="submit"
-              className="w-40 ml-30 mt-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+              className="w-auto ml-30 mt-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
             >
               Register
             </button>

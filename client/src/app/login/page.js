@@ -26,7 +26,7 @@ const page = () => {
 
       const data = await res.json();
       if (res.status == 200) {
-        router.push("/login");
+        router.push("/");
       }
       toast(data.msg);
     } catch (error) {
