@@ -1,75 +1,79 @@
-# PCInfo
+# E-commerce Website
 
-# E-Commerce Website - MERN Stack
-
-Welcome to our E-Commerce website project built with the MERN (MongoDB, Express.js, React, Node.js) stack. This platform allows users to explore and purchase laptops and desktops from various brands, categorized by type and price range.
+Welcome to E-commerce website! This project is a full-fledged e-commerce application developed to provide a seamless online shopping experience. Whether you are a developer looking to contribute, or simply curious about how online shopping platforms work, this repository has something for you.
 
 ## Table of Contents
 
 - [Features](#features)
-- [Demo](#demo)
-- [Installation](#installation)
-- [Usage](#usage)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
 - [Technologies Used](#technologies-used)
 - [Contributing](#contributing)
-- [License](#license)
+- [Authors](#authors)
 
 ## Features
 
-- Browse laptops and desktops from different brands.
-- Filter products based on categories: Cheap, Normal, High-end/Gaming.
-- User-friendly interface for easy navigation.
-- Secure user authentication and authorization.
-- Add products to the shopping cart and proceed to checkout.
+- User Authentication: Secure user authentication and authorization system.
+- Product Management: Easily add, edit, and remove products from the catalog.
+- Shopping Cart: A shopping cart system that allows users to add and remove items.
+- Checkout Process: Seamless checkout process with multiple payment options.
+- Order Management: Track and view order history for each user.
+- Admin Dashboard: Powerful admin dashboard for managing products, orders, and users.
+- Responsive Design: Ensures a seamless experience across various devices.
 
-## Demo
 
-[![Watch the Demo](https://link-to-demo-screenshot.com)](https://link-to-demo-video.com)
+## Getting Started
 
-Click the image above to watch a quick demo of our E-Commerce website.
+### Prerequisites
 
-## Installation
+Before you begin, ensure you have the following installed:
+
+- Node.js
+- npm (Node Package Manager)
+- MongoDB
+
+
+### Installation
 
 1. Clone the repository:
 
-   ```bash
-   git clone https://github.com/your-username/your-repo.git
+```bash
+    git clone https://github.com/sandesh079/PCInfo.git
+```
 
-2. Change directory to the project folder:
+2. Navigate to the project directory:
 
-   ```bash
-   cd your-repo
+```bash
+    cd PCInfo
+```
 
-3. Install dependencies for both server and client:
+3. Install dependencies:
 
-   ```bash
-   cd server && npm install
-   cd ../client && npm install
+```bash
+    npm install
+```
 
 4. Create a .env file in the server directory and configure the necessary environment variables:
 
-   ```env
-   MONGO_URI=your_mongodb_connection_string
-   SECRET_KEY=your_secret_key_for_jwt
-   ```
+```bash
+    MONGO_URI=your_mongodb_connection_string
+    SECRET_KEY=your_secret_key_for_jwt
+```
 
-6. Run the server:
+5. Run the server:
 
-   ```bash
-   cd ../server && npm run dev
+```bash
+    cd ../server && npm start
+```
 
-7. Run the client:
+6. Run the client:
 
-   ```bash
-   cd ../client && npm run dev
+```bash
+    cd ../client && npm start
+```
+The application should now be running locally at 'http://localhost:3000'.
 
-Visit http://localhost:3000 to access the application.
-
-## Usage
-
-1. Browse products by brand, category, and price range.
-2. Add desired items to the shopping cart.
-3. Proceed to checkout and complete the purchase.
 
 ## Technologies Used
 
@@ -79,7 +83,15 @@ Visit http://localhost:3000 to access the application.
 - Node.js
 - JWT for authentication
 
+
 ## Contributing
 
-We welcome contributions! Please follow our contribution guidelines to get started.
+Contributions are always welcome! If you'd like to contribute to the project, please follow our Contribution Guidelines.
+
+
+
+## Authors
+
+- [@sandesh](https://www.github.com/sandesh079)
+
 	
