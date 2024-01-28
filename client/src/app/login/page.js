@@ -3,6 +3,9 @@ import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
 import {  toast } from 'react-toastify';
 import { useRouter } from 'next/navigation'
+import Link from "next/link";
+import { addUserDetails } from "@/redux/reducerSlice/userSlice";
+import { useDispatch } from "react-redux";
 
 // Define the validation schema
 const SignInSchema = Yup.object().shape({
@@ -14,9 +17,9 @@ const SignInSchema = Yup.object().shape({
 
 const page = () => {
   const router = useRouter()
+  const dispatch = useDispatch()
   const handleLogin = async (values) => {
-    try {
-      const res = await fetch("http://localhost:5000/api/login/", {
+      const res = await fetch("http://localhost:5000/login/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -26,16 +29,16 @@ const page = () => {
 
       const data = await res.json();
       if (res.status == 200) {
+        dispatch(addUserDetails(data))
         router.push("/");
+        dispatch(addUserDetails(data))
+      } else{
+        toast(data.msg);
       }
-      toast(data.msg);
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
+  }
 
   return (
-    <div className="flex w-full justify-center h-[90vh] items-center">
+    <div className="flex min-w-full justify-center h-[90vh] items-center">
       <Formik
         initialValues={{
           email: "",
@@ -53,7 +56,7 @@ const page = () => {
                 name="email"
                 type="email"
                 placeholder="Enter your email"
-                className="w-96 p-3 border border-gray-300 rounded"
+                className="w-auto p-3 border border-gray-300 rounded"
               />
             </div>
 
@@ -62,13 +65,15 @@ const page = () => {
                 name="password"
                 type="password"
                 placeholder="Enter your password"
-                className="w-96 p-3 border border-gray-300 rounded"
+                className="w-auto p-3 border border-gray-300 rounded"
               />
             </div>
 
+            <p>Don't have an account? <Link href="/register" className="text-blue-700">SignUp</Link></p>
+
             <button
               type="submit"
-              className="w-40 ml-30 mt-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+              className="w-auto ml-30 mt-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
             >
               Login
             </button>

@@ -37,6 +37,7 @@ const loginUser = async(req, res)=>{
             if(match){
                 const token = jwt.sign({ email: req.body.email }, 'shhhhh');
                 res.json({
+                    userDetails,
                     msg: 'Login Successful', token
                 })
             }else{

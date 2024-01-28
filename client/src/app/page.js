@@ -6,8 +6,8 @@ import Link from "next/link";
 import { useSelector } from "react-redux";
 
 const page = () => {
-  const z = useSelector((state) => state);
-  console.log(z);
+  // const z = useSelector((state) => state);
+  // console.log(z);
   return (
     <>
       

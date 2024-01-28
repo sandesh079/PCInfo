@@ -9,7 +9,7 @@ require('dotenv').config()
 const userRoute = require('./routes/user')
 connection()
 // const User = require('./models/user')
-app.use('/api', userRoute);
+app.use('/', userRoute);
 const port = process.env.PORT
 
 

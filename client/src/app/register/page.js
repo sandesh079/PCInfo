@@ -3,6 +3,7 @@ import { Formik, Field, Form } from "formik";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
+import Link from "next/link";
 
 const page = () => {
   const router = useRouter()
@@ -17,7 +18,7 @@ const page = () => {
   });
   const handleRegister = async (values) => {
     try {
-      const res = await fetch("http://localhost:5000/api/register",
+      const res = await fetch("http://localhost:5000/register",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -36,7 +37,7 @@ const page = () => {
   
   };
   return (
-    <div className="flex w-full justify-center h-[90vh] items-center">
+    <div className="flex min-w-full justify-center h-[90vh] items-center">
       <Formik
         initialValues={{
           fullName: "",
@@ -94,13 +95,14 @@ const page = () => {
                 name="password"
                 type="password"
                 placeholder="Enter your password"
-                className="w-auto p-3 border border-gray-300 rounded"
+                className="w-auto p-3 border border-gray-300 rounded show-password-icon"
               />
               {errors.password && (
                 <div className="text-red-500">{errors.password}</div>
               )}
             </div>
-
+            
+            <p>Already have an account? <Link href="/login" className="text-blue-700">Login</Link></p>
             <button
               type="submit"
               className="w-auto ml-30 mt-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
