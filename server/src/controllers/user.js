@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 
 const registerNewUser = async(req, res)=>{
     try{
-        const existingUser = await User.findOne({phoneNumber: req.body.phoneNumber, email: req.body.email})
+        const existingUser = await User.find({phoneNumber: req.body.phoneNumber, email: req.body.email})
         if(existingUser){
             return res.status(403).json({
                 msg: "User Already Exist"
@@ -38,10 +38,11 @@ const loginUser = async(req, res)=>{
                 const token = jwt.sign({ email: req.body.email }, 'shhhhh');
                 res.json({
                     userDetails,
-                    msg: 'Login Successful', token
+                    msg: 'Login Successful', 
+                    token
                 })
             }else{
-                res.json({
+                res.status(403).json({
                     msg: 'Incorrect Password'
                 })
             }

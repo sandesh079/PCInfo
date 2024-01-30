@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import Link from "next/link";
 
 const page = () => {
-  const router = useRouter()
+  const router = useRouter();
 
   const SignupSchema = Yup.object().shape({
     fullName: Yup.string().required("Fullname is required"),
@@ -16,28 +16,27 @@ const page = () => {
       .min(6, "Password must be at least 6 characters")
       .required("Password is required"),
   });
+
   const handleRegister = async (values) => {
     try {
-      const res = await fetch("http://localhost:5000/register",
-      {
+      const res = await fetch("http://localhost:5000/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
-      }
-    );
+      });
 
-    const data = await res.json();
-    if (res.status == 200) {
-      router.push("/login");
-    }
-    toast(data.msg);
+      const data = await res.json();
+      if (res.status === 200) {
+        router.push("/login");
+      }
+      toast(data.msg);
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  
   };
+
   return (
-    <div className="flex min-w-full justify-center h-[90vh] items-center">
+    <div className="flex mt-12 min-w-full justify-center h-auto">
       <Formik
         initialValues={{
           fullName: "",
@@ -51,61 +50,66 @@ const page = () => {
         }}
       >
         {({ errors }) => (
-          <Form className="bg-slate-50 shadow-2xl p-10 rounded-lg">
-            <div className="mb-4 flex flex-col">
+          <Form className="max-w-md bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <div className="mb-5">
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="fullName">
+                Full Name
+              </label>
               <Field
                 name="fullName"
                 type="text"
-                placeholder="Enter your fullname"
-                className="w-auto p-3 border border-gray-300 rounded"
+                className={`w-full lg:w-96 p-3 border rounded ${errors.fullName ? 'border-red-500' : 'border-gray-300'}`}
               />
-              {errors.fullName && (
-                <div className="text-red-500">{errors.fullName}</div>
-              )}
+              {errors.fullName && <p className="absolute text-red-500 text-xs">{errors.fullName}</p>}
             </div>
-            
 
-            <div className="mb-4 flex flex-col">
+            <div className="mb-5">
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="phoneNumber">
+                Phone Number
+              </label>
               <Field
                 name="phoneNumber"
                 type="text"
-                placeholder="Enter your phonenumber"
-                className="w-auto p-3 border border-gray-300 rounded"
+                className={`w-full p-3 border rounded ${errors.phoneNumber ? 'border-red-500' : 'border-gray-300'}`}
               />
               {errors.phoneNumber && (
-                <div className="text-red-500">{errors.phoneNumber}</div>
+                <p className="absolute text-red-500 text-xs">{errors.phoneNumber}</p>
               )}
             </div>
-            
 
-            <div className="mb-4 flex flex-col">
+            <div className="mb-5">
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+                Email
+              </label>
               <Field
                 name="email"
                 type="email"
-                placeholder="Enter your email"
-                className="w-auto p-3 border border-gray-300 rounded"
+                className={`w-full p-3 border rounded ${errors.email ? 'border-red-500' : 'border-gray-300'}`}
               />
-              {errors.email && (
-                <div className="text-red-500">{errors.email}</div>
-              )}
+              {errors.email && <p className="absolute text-red-500 text-xs">{errors.email}</p>}
             </div>
 
-            <div className="mb-4 flex flex-col">
+            <div className="mb-5">
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+                Password
+              </label>
               <Field
                 name="password"
                 type="password"
-                placeholder="Enter your password"
-                className="w-auto p-3 border border-gray-300 rounded show-password-icon"
+                className={`w-full p-3 border rounded ${errors.password ? 'border-red-500' : 'border-gray-300'}`}
               />
-              {errors.password && (
-                <div className="text-red-500">{errors.password}</div>
-              )}
+              {errors.password && <p className="absolute text-red-500 text-xs">{errors.password}</p>}
             </div>
-            
-            <p>Already have an account? <Link href="/login" className="text-blue-700">Login</Link></p>
+
+            <p className="text-sm">
+              Already have an account?{" "}
+              <Link href="/login" className="text-blue-700 underline">
+                Login
+              </Link>
+            </p>
             <button
               type="submit"
-              className="w-auto ml-30 mt-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+              className="w-full mt-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             >
               Register
             </button>

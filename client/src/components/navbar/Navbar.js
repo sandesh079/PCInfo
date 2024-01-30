@@ -19,28 +19,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { logout } from "@/redux/reducerSlice/userSlice";
 import { useRouter } from "next/navigation";
 
-// const user = {
-//   name: "Tom Cook",
-//   email: "tom@example.com",
-//   imageUrl:
-//     "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-// };
-// const navigation = [
-//   { name: "Home", href: "/", current: true },
-//   { name: "Products", href: "/", current: false },
-//   { name: "About", href: "/", current: false },
-//   { name: "Contact Us", href: "/", current: false },
-// ];
-// const userNavigation = [
-//   { name: "Your Profile", href: "#" },
-//   { name: "Settings", href: "#" },
-//   { name: "Sign out", href: "#" },
-// ];
-
-// function classNames(...classes) {
-//   return classes.filter(Boolean).join(" ");
-// }
-
 const NavBar = () => {
   const dispatch = useDispatch()
   const router = useRouter()
@@ -69,11 +47,7 @@ const NavBar = () => {
             <p className="font-semibold">zoey@example.com</p>
           </DropdownItem>
           <DropdownItem key="settings">My Settings</DropdownItem>
-          <DropdownItem key="team_settings">Team Settings</DropdownItem>
-          <DropdownItem key="analytics">Analytics</DropdownItem>
-          <DropdownItem key="system">System</DropdownItem>
           <DropdownItem key="configurations">Configurations</DropdownItem>
-          <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
           <DropdownItem onClick={handleLogout} key="logout" color="danger">
             Log Out
           </DropdownItem>
@@ -84,10 +58,10 @@ const NavBar = () => {
   const AuthButtons = () => {
     return (
       <>
-        <Button as={Link} href="/login">
+        <Button as={Link} className="sm:flex" href="/login">
           Login
         </Button>
-        <Button as={Link} href="/register">
+        <Button as={Link} className="sm:flex bg-blue-500 hover:bg-blue-700 text-white" href="/register">
           Register
         </Button>
       </>
@@ -96,27 +70,26 @@ const NavBar = () => {
   return (
     <Navbar isBordered>
       <NavbarContent justify="start">
-        <NavbarBrand className="mr-4">
-          <Image src="/fusiontechlogo.png" width="80" height="90" />
-          <p className="hidden sm:block font-bold text-inherit">Parcel App</p>
+        <NavbarBrand >
+          <Link href={'/'} className="hidden sm:block font-bold text-inherit">FUSION TECH</Link>
         </NavbarBrand>
-        {/* <NavbarContent className="hidden sm:flex gap-3">
+        <NavbarContent className="hidden sm:flex gap-5">
           <NavbarItem>
-            <Link color="foreground" href="#">
-              Features
-            </Link>
-          </NavbarItem>
-          <NavbarItem isActive>
-            <Link href="#" aria-current="page" color="secondary">
-              Customers
+            <Link href="/">
+              Home
             </Link>
           </NavbarItem>
           <NavbarItem>
-            <Link color="foreground" href="#">
-              Integrations
+            <Link href="/">
+              Products
             </Link>
           </NavbarItem>
-        </NavbarContent> */}
+          <NavbarItem>
+            <Link href="/">
+              About
+            </Link>
+          </NavbarItem>
+        </NavbarContent>
       </NavbarContent>
 
       <NavbarContent as="div" className="items-center" justify="end">

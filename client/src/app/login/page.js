@@ -29,8 +29,9 @@ const page = () => {
 
       const data = await res.json();
       if (res.status == 200) {
+        
         dispatch(addUserDetails(data))
-        router.push("/");
+        router.push('/admin/products');
         dispatch(addUserDetails(data))
       } else{
         toast(data.msg);
@@ -38,7 +39,7 @@ const page = () => {
   }
 
   return (
-    <div className="flex min-w-full justify-center h-[90vh] items-center">
+    <div className="flex min-w-full justify-center h-auto mt-12">
       <Formik
         initialValues={{
           email: "",
@@ -50,30 +51,34 @@ const page = () => {
         }}
       >
         {({ errors, touched }) => (
-          <Form className="bg-slate-50 shadow-2xl p-10 rounded-lg">
+          <Form className="max-w-md bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             <div className="mb-4">
+              <label className="block text-gray-700 text-sm font-bold mb-2" >
+                Email
+              </label>
               <Field
                 name="email"
                 type="email"
-                placeholder="Enter your email"
-                className="w-auto p-3 border border-gray-300 rounded"
+                className="w-full lg:w-96 p-3 border border-gray-300 rounded"
               />
             </div>
 
             <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2" >
+                Password
+              </label>
               <Field
                 name="password"
                 type="password"
-                placeholder="Enter your password"
-                className="w-auto p-3 border border-gray-300 rounded"
+                className="w-full p-3 border border-gray-300 rounded"
               />
             </div>
 
-            <p>Don't have an account? <Link href="/register" className="text-blue-700">SignUp</Link></p>
+            <p className="text-sm">Don't have an account?{" "} <Link href="/register" className="text-blue-700 underline">SignUp</Link></p>
 
             <button
               type="submit"
-              className="w-auto ml-30 mt-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+              className="w-full mt-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             >
               Login
             </button>
