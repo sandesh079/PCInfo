@@ -31,7 +31,7 @@ const page = () => {
       if (res.status == 200) {
         
         dispatch(addUserDetails(data))
-        router.push('/admin/products');
+        router.push('/admin');
         dispatch(addUserDetails(data))
       } else{
         toast(data.msg);
