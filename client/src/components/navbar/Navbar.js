@@ -80,7 +80,7 @@ const NavBar = () => {
             </Link>
           </NavbarItem>
           <NavbarItem>
-            <Link href="/">
+            <Link href="/products">
               Products
             </Link>
           </NavbarItem>

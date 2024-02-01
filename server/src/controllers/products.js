@@ -3,7 +3,7 @@ const Product = require('../models/products')
 
 const addNewProducts = async(req, res)=>{
     await Product.create(req.body)
-    return res.json({msg: 'Product added'})
+    return res.json({msg: 'Product Added Successfully'})
 }
 
 const getAllProducts = async(req, res)=>{
