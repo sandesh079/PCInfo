@@ -6,4 +6,10 @@ const addNewProducts = async(req, res)=>{
     return res.json({msg: 'Product added'})
 }
 
-module.exports = {addNewProducts}
+const getAllProducts = async(req, res)=>{
+    const productList = await Product.find()
+    res.json(productList)
+    
+}
+
+module.exports = {addNewProducts, getAllProducts}

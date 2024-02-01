@@ -1,14 +1,23 @@
 "use client";
-import NavbarComponent from "@/components/navbar/Navbar";
-import React from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { useSelector } from "react-redux";
+import Card from "@/components/product-card/page";
+import React, { useEffect, useState } from "react";
 
 const page = () => {
+  const [productList, setProductList] = useState([])
+  const fetchProducts = async()=>{
+    const res = await fetch('http://localhost:5000/products')
+    const data = await res.json()
+    setProductList(data)
+  }
+  useEffect(()=>{
+    fetchProducts()
+  },[])
 
   return (
-    <>
+    <div>
+      {productList.length>0 && productList.map((item)=>{
+        return <Card item={item} />
+      })}
       
         <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
           <div className="hidden sm:mb-8 sm:flex sm:justify-center">
@@ -46,7 +55,7 @@ const page = () => {
           </div>
         </div>
       
-    </>
+    </div>
   );
 };
 
