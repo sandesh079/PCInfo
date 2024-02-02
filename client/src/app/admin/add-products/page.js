@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 
 export default function Products() {
   const addNewProduct = async (values) => {
-    const res = await fetch("http://localhost:5000/products/", {
+    const res = await fetch(`http://localhost:${process.env.NEXT_PUBLIC_API_URL}/products/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

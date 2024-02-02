@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 const page = () => {
   const [productList, setProductList] = useState([]);
   const fetchProducts = async () => {
-    const res = await fetch("http://localhost:5000/products");
+    const res = await fetch(`http://localhost:${process.env.NEXT_PUBLIC_API_URL}/products`);
     const data = await res.json();
     setProductList(data);
   };
@@ -17,7 +17,7 @@ const page = () => {
     <>
       <div id="default-carousel" className="relative w-auto" data-carousel="slide">
         {/* <!-- Carousel wrapper --> */}
-        <div className="relative overflow-hidden  md:h-unit-9xl">
+        <div className="relative   md:h-unit-9xl">
           {/* <!-- Item 1 --> */}
           <div className="hidden duration-700 ease-in-out" data-carousel-item>
             <img
