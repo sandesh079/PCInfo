@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import Link from "next/link";
 import { addUserDetails } from "@/redux/reducerSlice/userSlice";
 import { useDispatch } from "react-redux";
+import URI from "@/config/api";
 
 // Define the validation schema
 const SignInSchema = Yup.object().shape({
@@ -19,7 +20,7 @@ const page = () => {
   const router = useRouter()
   const dispatch = useDispatch()
   const handleLogin = async (values) => {
-      const res = await fetch(`http://localhost:${process.env.NEXT_PUBLIC_API_URL}/login/`, {
+      const res = await fetch(`${URI}/login/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

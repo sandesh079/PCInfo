@@ -5,7 +5,7 @@ import { Card } from "antd";
 const { Meta } = Card;
 const ProductCard = (props) => {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-row">
       <Card
         hoverable
         style={{
@@ -20,10 +20,10 @@ const ProductCard = (props) => {
         }
       >
         <Meta
-          title={props.item.productName}
-          description={props.item.description}
+          title={props?.item?.productName}
+          description={props?.item?.description}
         />
-        <Meta title={"Rs. " + props.item.price} />
+        <Meta title={"Rs. " + props?.item?.price} />
       </Card>
     </div>
   );

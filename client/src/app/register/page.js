@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 import Link from "next/link";
+import URI from "@/config/api";
 
 const page = () => {
   const router = useRouter();
@@ -19,7 +20,7 @@ const page = () => {
 
   const handleRegister = async (values) => {
     try {
-      const res = await fetch(`http://localhost:${process.env.NEXT_PUBLIC_API_URL}/register`, {
+      const res = await fetch(`${URI}/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
