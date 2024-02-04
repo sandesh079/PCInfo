@@ -1,0 +1,14 @@
+{
+    "services": [
+      {
+        "name": "pcinfo-server",
+        "env": {
+          "NODE_ENV": "production"
+        },
+        "buildCommand": "cd server && npm install && npm run build",
+        "startCommand": "cd server && npm start",
+        "directory": "server"
+      }
+    ]
+  }
+  
