@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import Card from "@/components/product-card/page";
 import URI from '@/config/api';
+import HomeLayout from '@/layout/HomeLayout';
 
 
 const AllProducts = () => {
@@ -15,11 +16,15 @@ const AllProducts = () => {
     fetchProducts();
   }, []);
   return (
-    <div className='mt-5'>
+    <HomeLayout>
+
+<div className='mt-5'>
         {productList.length > 0 && productList.map((item) => {
           return <Card item={item} />;
       })}
     </div>
+    </HomeLayout>
+
   )
 }
 

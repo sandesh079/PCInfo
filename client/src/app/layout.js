@@ -19,11 +19,12 @@ export default function RootLayout({ children }) {
     <html lang="en" className="">
       <body className={inter.className}>
         <ReduxProvider>
+          
           <Providers>
-            <Navbar />
+            {/* <Navbar /> */}
             <ToastContainer hideProgressBar theme="dark" />
             {children}
-            <Footer />
+            {/* <Footer /> */}
           </Providers>
         </ReduxProvider>
       </body>
