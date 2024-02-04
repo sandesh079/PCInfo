@@ -1,19 +1,13 @@
 "use client";
 import React, { useState } from "react";
-import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  UploadOutlined,
-  ShoppingOutlined,
-  AppstoreAddOutlined,
-} from "@ant-design/icons";
-import { Layout, Menu, Button, theme } from "antd";
 import { useFormik } from "formik";
 import URI from "@/config/api";
-import SideBar from './components/sidebar'
+import Link from "next/link";
+import { toast } from "react-toastify";
 
 
 const page = () => {
+
   const addNewProduct = async (values) => {
     const res = await fetch(`${URI}/products/`, {
       method: "POST",
@@ -22,9 +16,12 @@ const page = () => {
       },
       body: JSON.stringify(values),
     });
+    const data = res.json()
+    
+    toast(data.msg)
+    
 
    }
-   debugger;
   const formik = useFormik({
     initialValues: {
       productName: '',
@@ -38,29 +35,13 @@ const page = () => {
     } 
   });
   return (
-    <div>
-      {/* <SideBar/> */}
-      <div className="max-w-md mx-auto bg-white p-8 border border-gray-300 shadow-lg rounded-md">
-      <h2 className="text-xl font-semibold mb-4">Sign Up</h2>
-      <form>
-        <div className="mb-4">
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
-          <input type="text" id="name" name="name" className="mt-1 p-2 border border-gray-300 rounded-md w-full" />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
-          <input type="email" id="email" name="email" className="mt-1 p-2 border border-gray-300 rounded-md w-full" />
-        </div>
-        <div className="mb-6">
-          <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
-          <input type="password" id="password" name="password" className="mt-1 p-2 border border-gray-300 rounded-md w-full" />
-        </div>
-        <div className="flex justify-end">
-          <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">Sign Up</button>
-        </div>
-      </form>
-    </div>
+    <div className="m-12 flex">
+
+     <Link className="rounded-xl bg-gray-400 hover:bg-gray-500 p-2 m-3" href={'/admin/add-categories'}>Add Category</Link>
+     <Link className="rounded-xl bg-gray-400 hover:bg-gray-500 p-2 m-3" href={'/admin/add-products'}>Add Product</Link>  
+      
     </div>
   );
 };
 export default page;
+

@@ -5,12 +5,12 @@ import { Card } from "antd";
 const { Meta } = Card;
 const ProductCard = (props) => {
   return (
-    <div className="flex flex-row">
+    <div className="inline-flex">
       <Card
         hoverable
         style={{
-          width: 300,
-          margin: 24,
+          width: 250,
+          margin: 8,
         }}
         cover={
           <img

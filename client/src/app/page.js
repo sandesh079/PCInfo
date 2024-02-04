@@ -33,6 +33,7 @@ const page = () => {
           <img style={{height: '80vh', width: '100%', objectFit: "cover"}} src="/slide-05.jpg" />
         </div>
       </Carousel>
+      <h1 className="m-12 flex justify-center font-bold text-3xl">Products Overview</h1>
 
       {productList.length > 0 &&
         productList.map((item) => {

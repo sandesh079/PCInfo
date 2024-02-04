@@ -15,7 +15,7 @@ const AllProducts = () => {
     fetchProducts();
   }, []);
   return (
-    <div>
+    <div className='mt-5'>
         {productList.length > 0 && productList.map((item) => {
           return <Card item={item} />;
       })}

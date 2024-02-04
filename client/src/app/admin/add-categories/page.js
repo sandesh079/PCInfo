@@ -1,15 +1,59 @@
 'use client'
 import React from 'react'
-import {Input} from "@nextui-org/react";
+import { useFormik } from "formik";
 
 const page = () => {
+  const formik = useFormik({
+    initialValues: {
+      productName: "",
+      category: "",
+      stock: "",
+      price: "",
+      description: "",
+    },
+    onSubmit: (values) => {
+      addNewProduct(values);
+    },
+  });
   return (
-    <div className="flex w-full justify-center h-[90vh] items-center">
-      <form className='bg-slate-50 shadow-2xl rounded-lg'>
-        <div className="m-10">
-          <Input label="Category" placeholder="Enter Category" className="w-96 rounded" /> <br/>
-          <Input label="Sub Category" placeholder="Enter Sub Category" className="w-96 rounded" /> <br/>
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Add Category</button>
+    <div className="flex min-w-full justify-center h-auto">
+      <form className="max-w-full mt-12 mb-4" onSubmit={formik.handleSubmit}>
+        <div className="space-y-12">
+          <div>
+            <h2 className="text-3xl flex justify-center font-semibold leading-7 text-gray-900">
+              Add New Category
+            </h2>
+
+            <div className="mt-10 ">
+              <div className="">
+                <label
+                  htmlFor="category"
+                  className="flex justify-start text-sm font-medium leading-6 text-gray-900"
+                >
+                  Category
+                </label>
+                <div className="mt-2">
+                  <input
+                    type="text"
+                    name="category"
+                    id="category"
+                    onChange={formik.handleChange}
+                    value={formik.values.productName}
+                    className="block w-full p-2 rounded-md border-current border-1 py-1.5 text-gray-900 shadow-sm  placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-6 flex items-center justify-center">
+          <button
+            type="submit"
+            className="rounded-md bg-indigo-600 px-3 py-2 text-base font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            Add Category
+          </button>
         </div>
       </form>
     </div>
