@@ -30,11 +30,3 @@ const uploadMiddleware = multer({
 
 module.exports = uploadMiddleware;
 
-// const logMiddleware = (req,res,next)=>{
-//    console.log(req.body)
-//    if(req.body.fullName){
-//     return res.send("not allowed")
-//    }
-//    next()
-// }
-// module.exports={logMiddleware,uploadMiddleware}

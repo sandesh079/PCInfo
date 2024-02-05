@@ -19,7 +19,7 @@ const AllProducts = () => {
     <HomeLayout>
 
 <div className='mt-5'>
-        {productList.length > 0 && productList.map((item) => {
+        {productList.map((item) => {
           return <Card item={item} />;
       })}
     </div>

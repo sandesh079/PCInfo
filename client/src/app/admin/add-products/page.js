@@ -5,15 +5,25 @@ import URI from "@/config/api";
 
 export default function Products() {
   const addNewProduct = async (values) => {
-    const res = await fetch(`${URI}/products/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(values),
-    });
-    const data = res.json();
-    toast(data.msg);
+    try{
+      const formData = new FormData()
+      formData.append("productName", values.productName)
+      formData.append("category", values.category)
+      formData.append("stock", values.stock)
+      formData.append("price", values.price)
+      formData.append("description", values.description)
+      formData.append("image", values.image)
+
+      const res = await fetch(`${URI}/products/`, {
+        method: "POST",
+        body: formData,
+      });
+      const data = await res.json();
+      toast(data.msg);
+    }catch (error){
+      console.error("Error:", error)
+    }
+    
   };
 
   const formik = useFormik({
@@ -23,11 +33,16 @@ export default function Products() {
       stock: "",
       price: "",
       description: "",
+      image: null,
     },
     onSubmit: (values) => {
       addNewProduct(values);
     },
   });
+
+  const handleFileChange = (event) => {
+    formik.setFieldValue("image", event.currentTarget.files[0]);
+};
   return (
     <div className="flex min-w-full justify-center h-auto">
       <form className="max-w-full mt-12 mb-4" onSubmit={formik.handleSubmit}>
@@ -140,7 +155,11 @@ export default function Products() {
                 </div>
               </div>
               <div className="sm:col-span-4">
-                <input type="file" id="myFile" name="filename" />
+                <input 
+                type="file" 
+                id="image" 
+                name="image" 
+                onChange={handleFileChange} />
               </div>
             </div>
           </div>

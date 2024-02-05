@@ -17,5 +17,5 @@ const getCarousel = async (req, res) => {
     res.json(carousel);
   };
   module.exports = {
-    getCarousel,addNewCarousel
+    getCarousel, addNewCarousel
   }

@@ -18,7 +18,6 @@ const page = () => {
   const fetchCarousel = async () => {
     const res = await fetch(`${URI}/carousel`);
     const data = await res.json();
-    console.log(data);
     setCarouselList(data);
   };
   useEffect(() => {
