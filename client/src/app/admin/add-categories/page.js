@@ -5,14 +5,10 @@ import { useFormik } from "formik";
 const page = () => {
   const formik = useFormik({
     initialValues: {
-      productName: "",
-      category: "",
-      stock: "",
-      price: "",
-      description: "",
+      category: ""
     },
     onSubmit: (values) => {
-      addNewProduct(values);
+      addNewCategory(values);
     },
   });
   return (

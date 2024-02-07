@@ -130,6 +130,7 @@ export default function Products() {
                     onChange={formik.handleChange}
                     value={formik.values.price}
                     autoComplete="price"
+                    required
                     className="block w-full p-2 rounded-md border-current border-1 py-1.5 text-gray-900 shadow-sm  placeholder:text-gray-400 sm:text-sm sm:leading-6"
                   />
                 </div>
