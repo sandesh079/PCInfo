@@ -1,16 +1,35 @@
 'use client'
-import React from 'react'
+import React from "react";
 import { useFormik } from "formik";
+import { toast } from "react-toastify";
+import URI from "@/config/api";
 
-const page = () => {
+const Page = () => {
+  const addNewCategory = async (values) => {
+    try {
+      const res = await fetch(`${URI}/categories`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+      const data = await res.json();
+      toast(data.msg);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const formik = useFormik({
     initialValues: {
-      category: ""
+      category: "",
+      isSubCategory: false,
+      subCategory: "",
     },
     onSubmit: (values) => {
       addNewCategory(values);
     },
   });
+
   return (
     <div className="flex min-w-full justify-center h-auto">
       <form className="max-w-full mt-12 mb-4" onSubmit={formik.handleSubmit}>
@@ -34,12 +53,52 @@ const page = () => {
                     name="category"
                     id="category"
                     onChange={formik.handleChange}
-                    value={formik.values.productName}
+                    value={formik.values.category}
+                    required
                     className="block w-full p-2 rounded-md border-current border-1 py-1.5 text-gray-900 shadow-sm  placeholder:text-gray-400 sm:text-sm sm:leading-6"
                   />
                 </div>
               </div>
             </div>
+            <div className="sm:col-span-3">
+              <label
+                htmlFor="isSubCategory"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Sub Category?
+              </label>
+              <div className="mt-0">
+                <input
+                  type="checkbox"
+                  name="isSubCategory"
+                  id="isSubCategory"
+                  onChange={formik.handleChange}
+                  checked={formik.values.isSubCategory}
+                />
+              </div>
+            </div>
+            {formik.values.isSubCategory && ( // Conditionally render if isSubCategory is true
+              <div className="mt-2 ">
+                <div className="">
+                  <label
+                    htmlFor="subCategory"
+                    className="flex justify-start text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Sub Category
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      type="text"
+                      name="subCategory"
+                      id="subCategory"
+                      onChange={formik.handleChange}
+                      value={formik.values.subCategory}
+                      className="block w-full p-2 rounded-md border-current border-1 py-1.5 text-gray-900 shadow-sm  placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
@@ -53,7 +112,7 @@ const page = () => {
         </div>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default Page;

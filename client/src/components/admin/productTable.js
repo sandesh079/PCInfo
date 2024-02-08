@@ -10,13 +10,18 @@ const columns = [
     fixed: 'left',
   },
   {
+    title: 'Brand',
+    width: 100,
+    dataIndex: 'brand',
+    key: 'brand',
+    fixed: 'left',
+  },
+  {
     title: 'Category',
     width: 100,
     dataIndex: 'category',
     key: 'category',
-    fixed: 'left',
-  },
-   
+  }, 
   {
     title: 'Storage',
     dataIndex: 'storage',
@@ -38,7 +43,7 @@ const columns = [
   {
     title: 'Available Stock',
     dataIndex: 'stock',
-    key: 'category',
+    key: 'stock',
     width: 150,
   },
   {
@@ -54,6 +59,12 @@ const columns = [
     width: 150,
   },
   {
+    title: 'Image',
+    dataIndex: 'image',
+    key: 'image',
+    width: 150,
+  },
+  {
     title: 'Action',
     key: 'operation',
     fixed: 'right',
@@ -62,7 +73,7 @@ const columns = [
   },
 ];
 const data = [];
-for (let i = 0; i < 100; i++) {
+for (let i = 0; i < 50; i++) {
   data.push({
     key: i,
     name: `Edward ${i}`,
@@ -70,13 +81,18 @@ for (let i = 0; i < 100; i++) {
     address: `London Park no. ${i}`,
   });
 }
-const ProductTable = () => (
-  <Table
+const ProductTable = () => {
+  return (
+    <div>
+      <Table
     columns={columns}
     dataSource={data}
     scroll={{
       x: 1500,
     }}
   />
-);
+    </div>
+  )
+}
+
 export default ProductTable;

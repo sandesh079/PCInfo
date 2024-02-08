@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import Header from '@/components/admin/Header'
-import Sidebar from "@/components/admin/SideBar";
+import Header from '@/components/admin/header'
+import Sidebar from "@/components/admin/sideBar";
+import { ToastContainer } from "react-toastify";
 // const inter = Inter({ subsets: ["latin"] });
 
 export default function DashboardLayout(
@@ -25,6 +26,7 @@ export default function DashboardLayout(
 
           {/* <!-- ===== Main Content Start ===== --> */}
           <main>
+          <ToastContainer hideProgressBar theme="dark" />
             <div className="mx-auto max-w-screen-sm xl:max-w-screen-2xl 2xl:max-w-screen-2xl lg:max-w-screen-2xl lg:p-4  p-0  md:p-6 2xl:p-5">
               {children}
             </div>

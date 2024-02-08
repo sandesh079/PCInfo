@@ -2,13 +2,18 @@
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import URI from "@/config/api";
+import ProductTable from "@/components/admin/productTable";
 
 export default function Products() {
   const addNewProduct = async (values) => {
     try{
       const formData = new FormData()
       formData.append("productName", values.productName)
+      formData.append("brand", values.brand)
       formData.append("category", values.category)
+      formData.append("storage", values.storage)
+      formData.append("ram", values.ram)
+      formData.append("processor", values.processor)
       formData.append("stock", values.stock)
       formData.append("price", values.price)
       formData.append("description", values.description)
@@ -29,7 +34,11 @@ export default function Products() {
   const formik = useFormik({
     initialValues: {
       productName: "",
+      brand: "",
       category: "",
+      storage: "",
+      ram: "",
+      processor: "",
       stock: "",
       price: "",
       description: "",
@@ -44,8 +53,9 @@ export default function Products() {
     formik.setFieldValue("image", event.currentTarget.files[0]);
 };
   return (
+    <>
     <div className="flex min-w-full justify-center h-auto">
-      <form className="max-w-full mt-12 mb-4" onSubmit={formik.handleSubmit}>
+      <form className="max-w-full p-10 mt-8 mb-4  shadow-md rounded bg-white" onSubmit={formik.handleSubmit}>
         <div className="space-y-12">
           <div>
             <h2 className="text-3xl flex justify-center font-semibold leading-7 text-gray-900">
@@ -53,7 +63,7 @@ export default function Products() {
             </h2>
 
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-              <div className="sm:col-span-3">
+              <div className="sm:col-span-6">
                 <label
                   htmlFor="productName"
                   className="block text-sm font-medium leading-6 text-gray-900"
@@ -67,8 +77,51 @@ export default function Products() {
                     id="productName"
                     onChange={formik.handleChange}
                     value={formik.values.productName}
+                    required
                     className="block w-full p-2 rounded-md border-current border-1 py-1.5 text-gray-900 shadow-sm  placeholder:text-gray-400 sm:text-sm sm:leading-6"
                   />
+                </div>
+              </div>
+              <div className="sm:col-span-6">
+                <label
+                  htmlFor="processor"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Processor
+                </label>
+                <div className="mt-2">
+                  <input
+                    id="processor"
+                    name="processor"
+                    type="text"
+                    onChange={formik.handleChange}
+                    value={formik.values.processor}
+                    required
+                    className="block w-full p-2 rounded-md border-current border-1 py-1.5 text-gray-900 shadow-sm  placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+              <div className="sm:col-span-3">
+                <label
+                  htmlFor="brand"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Brand
+                </label>
+                <div className="mt-2">
+                  <select
+                    id="brand"
+                    name="brand"
+                    onChange={formik.handleChange}
+                    value={formik.values.brand}
+                    required
+                    className="block w-full p-2 h-9 rounded-md border-current border-1 py-1.5 text-gray-900 shadow-sm  placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                  >
+                    <option>Acer</option>
+                    <option>Dell</option>
+                    <option>HP</option>
+                    <option>Lenovo</option>
+                  </select>
                 </div>
               </div>
 
@@ -77,7 +130,7 @@ export default function Products() {
                   htmlFor="category"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Product Category
+                  Category
                 </label>
                 <div className="mt-2">
                   <select
@@ -85,15 +138,57 @@ export default function Products() {
                     name="category"
                     onChange={formik.handleChange}
                     value={formik.values.category}
-                    autoComplete="category-name"
+                    required
                     className="block w-full p-2 h-9 rounded-md border-current border-1 py-1.5 text-gray-900 shadow-sm  placeholder:text-gray-400 sm:text-sm sm:leading-6"
                   >
-                    <option>Acer</option>
-                    <option>Dell</option>
-                    <option>Lenovo</option>
+                    <option>Gaming Laptops</option>
+                    <option>Business Laptops</option>
+                    <option>Ultrabooks</option>
                   </select>
                 </div>
               </div>
+
+              <div className="sm:col-span-3">
+                <label
+                  htmlFor="storage"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Storage
+                </label>
+                <div className="mt-2">
+                  <input
+                    id="storage"
+                    name="storage"
+                    type="text"
+                    onChange={formik.handleChange}
+                    value={formik.values.storage}
+                    required
+                    className="block w-full p-2 rounded-md border-current border-1 py-1.5 text-gray-900 shadow-sm  placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+
+              <div className="sm:col-span-3">
+                <label
+                  htmlFor="ram"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  RAM
+                </label>
+                <div className="mt-2">
+                  <input
+                    id="ram"
+                    name="ram"
+                    type="text"
+                    onChange={formik.handleChange}
+                    value={formik.values.ram}
+                    required
+                    className="block w-full p-2 rounded-md border-current border-1 py-1.5 text-gray-900 shadow-sm  placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+
+              
 
               <div className="sm:col-span-3">
                 <label
@@ -108,8 +203,7 @@ export default function Products() {
                     name="stock"
                     type="text"
                     onChange={formik.handleChange}
-                    value={formik.values.stock}
-                    autoComplete="stock"
+                    value={formik.values.stock}required
                     className="block w-full p-2 rounded-md border-current border-1 py-1.5 text-gray-900 shadow-sm  placeholder:text-gray-400 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -129,7 +223,6 @@ export default function Products() {
                     type="text"
                     onChange={formik.handleChange}
                     value={formik.values.price}
-                    autoComplete="price"
                     required
                     className="block w-full p-2 rounded-md border-current border-1 py-1.5 text-gray-900 shadow-sm  placeholder:text-gray-400 sm:text-sm sm:leading-6"
                   />
@@ -150,7 +243,7 @@ export default function Products() {
                     id="description"
                     onChange={formik.handleChange}
                     value={formik.values.description}
-                    autoComplete="description"
+                    required
                     className="block w-full p-2 rounded-md border-current border-1 py-1.5 text-gray-900 shadow-sm  placeholder:text-gray-400 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -160,6 +253,7 @@ export default function Products() {
                 type="file" 
                 id="image" 
                 name="image" 
+                required
                 onChange={handleFileChange} />
               </div>
             </div>
@@ -181,6 +275,13 @@ export default function Products() {
           </button>
         </div>
       </form>
+      
     </div>
+    <div className="mt-5 mb-8">
+      <h1 className="mb-3 flex justify-center text-2xl">Products Table</h1>
+      <ProductTable/>
+    </div>
+    </>
+
   );
 }

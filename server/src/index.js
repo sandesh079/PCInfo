@@ -8,12 +8,14 @@ app.use(express.json())
 require('dotenv').config()
 const userRoute = require('./routes/user')
 const productRoute = require('./routes/products')
+const categoryRoute = require('./routes/categories.router')
 const carouselRouter = require('./routes/carousel.router')
 connection()
 app.use(express.static('public'))
 // const User = require('./models/user')
 app.use(userRoute);
 app.use(productRoute);
+app.use(categoryRoute);
 app.use(carouselRouter);
 
 const port = process.env.PORT

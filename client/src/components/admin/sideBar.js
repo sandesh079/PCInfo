@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { LuLayoutDashboard } from "react-icons/lu";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import Image from "next/image";
 import {DashboardRoutes} from "@/routes/routes";
 
 const MenuItem = ({ icon, name, route }) => {
@@ -64,7 +62,8 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
       }`}
     >
       <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
-        <Link href="/dashboard" className="p-10">
+        <Link href="/dashboard" className="p-6 text-xl">
+          <h1>FusionTech</h1>
           {/* <Image src={"/image/logo.png"} height={20} width={20} alt="logo" /> */}
         </Link>
 
