@@ -8,7 +8,8 @@ const addNewCategories = async (req, res) => {
         // Check if the category or category and subcategory already exist
         const existingCategory = await Category.find({
             category: category,
-            ...(subCategory && { subCategory: subCategory }) // Check for subcategory only if it's provided
+            ...(subCategory && { subCategory: subCategory }) 
+            // Check for subcategory only if it's provided
         });
 
         if (existingCategory.length > 0) {
@@ -25,7 +26,7 @@ const addNewCategories = async (req, res) => {
     } catch (err) {
         console.error(err);
         return res.status(500).json({
-            msg: "Internal Server Error"
+            msg: "Error"
         });
     }
 };
@@ -37,7 +38,7 @@ const getAllCategories = async (req, res) => {
     } catch (err) {
         console.error(err);
         return res.status(500).json({
-            msg: "Internal Server Error"
+            msg: "Error"
         });
     }
 };
