@@ -1,30 +1,64 @@
-"use client";
-import { useFormik } from "formik";
-import { toast } from "react-toastify";
-import URI from "@/config/api";
-import ProductTable from "@/components/admin/productTable";
-import { useEffect, useState } from "react";
+'use client'
+import { Form, Input, Select, Button, Upload, message, Modal } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
+import { useState, useEffect } from 'react';
+import URI from '@/config/api';
+import ProductTable from '@/components/admin/productTable';
+import { useSelector } from 'react-redux';
+const { Option } = Select;
 
 export default function Products() {
   const [categories, setCategories] = useState([]);
+  const [addLoading,setAddLoading]= useState(false)
+  const [productList, setProductList] = useState([]);
+  const token = useSelector((state)=>state.user.token)
+
+  const fetchCategories = async () => {
+    try {
+      const res = await fetch(`${URI}/categories`,{
+        headers:{
+          authorization:token
+        }
+      });
+      const data = await res.json();
+      setCategories(data);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    }
+  };
+  const fetchProducts = async () => {
+    try {
+      const res = await fetch(`${URI}/products`);
+      const data = await res.json();
+      setProductList(data);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+  };
 
   useEffect(() => {
     // Fetch categories from server
-    const fetchCategories = async () => {
-      try {
-        const res = await fetch(`${URI}/categories`);
-        const data = await res.json();
-        setCategories(data);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    };
+    
+
+    fetchProducts();
 
     fetchCategories();
   }, []);
 
-  const addNewProduct = async (values) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+  const onFinish = async (values) => {
     try {
+      setAddLoading(true)
       const formData = new FormData();
       formData.append("productName", values.productName);
       formData.append("brand", values.brand);
@@ -35,289 +69,297 @@ export default function Products() {
       formData.append("stock", values.stock);
       formData.append("price", values.price);
       formData.append("description", values.description);
-      formData.append("image", values.image);
-
-      const res = await fetch(`${URI}/products/`, {
+      formData.append("image", values.image.file.originFileObj);
+   
+      const res = await fetch(`${URI}/products/`,
+    
+      {
         method: "POST",
         body: formData,
-      });
+        
+          headers:{
+             authorization:token
+          }
+        ,
+      },);
       const data = await res.json();
-      toast(data.msg);
+      fetchProducts()
+      message.success(data.msg);
+      
+      setAddLoading(false)
+      handleCancel()
+
     } catch (error) {
+      setAddLoading(false)
       console.error("Error:", error);
+      message.error("Error adding product");
     }
   };
 
-  const formik = useFormik({
-    initialValues: {
-      productName: "",
-      brand: "",
-      category: "",
-      storage: "",
-      ram: "",
-      processor: "",
-      stock: "",
-      price: "",
-      description: "",
-      image: null,
-    },
-    onSubmit: (values) => {
-      addNewProduct(values);
-    },
-  });
 
-  const handleFileChange = (event) => {
-    formik.setFieldValue("image", event.currentTarget.files[0]);
-  };
+
   return (
     <>
-      <div className="flex min-w-full justify-center h-auto">
-        <form
-          className="max-w-full p-10 mt-8 mb-4  shadow-md rounded bg-white"
-          onSubmit={formik.handleSubmit}
-        >
-          <div className="space-y-12">
-            <div>
-              <h2 className="text-3xl flex justify-center font-semibold leading-7 text-gray-900">
-                Add New Product
-              </h2>
-
-              <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                <div className="sm:col-span-6">
-                  <label
-                    htmlFor="productName"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    Product Name
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      type="text"
-                      name="productName"
-                      id="productName"
-                      onChange={formik.handleChange}
-                      value={formik.values.productName}
-                      required
-                      className="block w-full p-2 rounded-md border-current border-1 py-1.5 text-gray-900 shadow-sm  placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                    />
-                  </div>
-                </div>
-                <div className="sm:col-span-6">
-                  <label
-                    htmlFor="processor"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    Processor
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      id="processor"
-                      name="processor"
-                      type="text"
-                      onChange={formik.handleChange}
-                      value={formik.values.processor}
-                      required
-                      className="block w-full p-2 rounded-md border-current border-1 py-1.5 text-gray-900 shadow-sm  placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                    />
-                  </div>
-                </div>
-                <div className="sm:col-span-3">
-                  <label
-                    htmlFor="brand"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    Brand
-                  </label>
-                  <div className="mt-2">
-                    <select
-                      id="brand"
-                      name="brand"
-                      onChange={formik.handleChange}
-                      value={formik.values.brand}
-                      required
-                      className="block w-full p-2 h-9 rounded-md border-current border-1 py-1.5 text-gray-900 shadow-sm  placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                    >
-                      <option value="">Select Brand</option>
-                      {
-                        // Use Set to filter out unique category names
-                        [
-                          ...new Set(
-                            categories.map((category) => category.category)
-                          ),
-                        ].map((categoryName) => (
-                          <option key={categoryName} value={categoryName}>
-                            {categoryName}
-                          </option>
-                        ))
-                      }
-                    </select>
-                  </div>
-                </div>
-
-                <div className="sm:col-span-3">
-                  <label
-                    htmlFor="category"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    Category
-                  </label>
-                  <div className="mt-2">
-                    <select
-                      id="category"
-                      name="category"
-                      onChange={formik.handleChange}
-                      value={formik.values.category}
-                      required
-                      className="block w-full p-2 h-9 rounded-md border-current border-1 py-1.5 text-gray-900 shadow-sm  placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                    >
-                      <option value="">Select Category</option>
-                      {categories.map(
-                        (category) =>
-                          // Only render options if the subCategory field is not null
-                          category.subCategory && (
-                            <option
-                              key={category._id}
-                              value={category.subCategory}
-                            >
-                              {category.subCategory}
-                            </option>
-                          )
-                      )}
-                    </select>
-                  </div>
-                </div>
-                <div className="sm:col-span-3">
-                  <label
-                    htmlFor="storage"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    Storage
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      id="storage"
-                      name="storage"
-                      type="text"
-                      onChange={formik.handleChange}
-                      value={formik.values.storage}
-                      required
-                      className="block w-full p-2 rounded-md border-current border-1 py-1.5 text-gray-900 shadow-sm  placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                    />
-                  </div>
-                </div>
-
-                <div className="sm:col-span-3">
-                  <label
-                    htmlFor="ram"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    RAM
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      id="ram"
-                      name="ram"
-                      type="text"
-                      onChange={formik.handleChange}
-                      value={formik.values.ram}
-                      required
-                      className="block w-full p-2 rounded-md border-current border-1 py-1.5 text-gray-900 shadow-sm  placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                    />
-                  </div>
-                </div>
-
-                <div className="sm:col-span-3">
-                  <label
-                    htmlFor="stock"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    Available in Stock
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      id="stock"
-                      name="stock"
-                      type="text"
-                      onChange={formik.handleChange}
-                      value={formik.values.stock}
-                      required
-                      className="block w-full p-2 rounded-md border-current border-1 py-1.5 text-gray-900 shadow-sm  placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                    />
-                  </div>
-                </div>
-
-                <div className="sm:col-span-3">
-                  <label
-                    htmlFor="price"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    Price
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      id="price"
-                      name="price"
-                      type="text"
-                      onChange={formik.handleChange}
-                      value={formik.values.price}
-                      required
-                      className="block w-full p-2 rounded-md border-current border-1 py-1.5 text-gray-900 shadow-sm  placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                    />
-                  </div>
-                </div>
-
-                <div className="col-span-full">
-                  <label
-                    htmlFor="description"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    Product description
-                  </label>
-                  <div className="mt-2">
-                    <textarea
-                      type="text"
-                      name="description"
-                      id="description"
-                      onChange={formik.handleChange}
-                      value={formik.values.description}
-                      required
-                      className="block w-full p-2 rounded-md border-current border-1 py-1.5 text-gray-900 shadow-sm  placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                    />
-                  </div>
-                </div>
-                <div className="sm:col-span-4">
-                  <input
-                    type="file"
-                    id="image"
-                    name="image"
-                    required
-                    onChange={handleFileChange}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-6 flex items-center justify-end gap-x-6">
-            <button
-              type="button"
-              className="text-base font-semibold leading-6 text-gray-900"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="rounded-md bg-indigo-600 px-3 py-2 text-base font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            >
-              Add Product
-            </button>
-          </div>
-        </form>
-      </div>
+  
       <div className="mt-5 mb-8">
-        <h1 className="mb-3 flex justify-center text-2xl">Products Table</h1>
-        <ProductTable />
+        {/* Products Table component goes here */}
       </div>
+      <Button       className="rounded-md bg-indigo-600  text-base font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" onClick={showModal}>
+        ADD PRODUCTS
+      </Button>
+      <Modal 
+      footer={false}
+      open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+      <Form
+    layout='vertical'
+      className="max-w-full  "
+      onFinish={onFinish}
+    >
+      <h2 className="text-3xl p-4 flex justify-center font-semibold leading-7 text-gray-900">
+        Add New Product
+      </h2>
+      <div className='grid grid-cols-2 gap-4'>
+      <Form.Item
+        label="Product Name"
+        className=''
+        name="productName"
+        rules={[{ required: true, message: 'Please input product name!' }]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        label="Processor"
+        name="processor"
+        rules={[{ required: true, message: 'Please input processor!' }]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        label="Brand"
+        name="brand"
+        rules={[{ required: true, message: 'Please select brand!' }]}
+      >
+        <Select>
+          {categories.map((category) => (
+            <Option key={category._id} value={category.category}>
+              {category.category}
+            </Option>
+          ))}
+        </Select>
+      </Form.Item>
+
+      <Form.Item
+        label="Category"
+        name="category"
+        rules={[{ required: true, message: 'Please select category!' }]}
+      >
+        <Select>
+          {categories.map((category) => (
+            <Option key={category._id} value={category.subCategory}>
+              {category.subCategory}
+            </Option>
+          ))}
+        </Select>
+      </Form.Item>
+
+      <Form.Item
+        label="Storage"
+        name="storage"
+        rules={[{ required: true, message: 'Please input storage!' }]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        label="RAM"
+        name="ram"
+        rules={[{ required: true, message: 'Please input RAM!' }]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        label="Available in Stock"
+        name="stock"
+        rules={[{ required: true, message: 'Please input stock!' }]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        label="Price"
+        name="price"
+        rules={[{ required: true, message: 'Please input price!' }]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        label="Product description"
+        name="description"
+        className='col-span-2'
+        rules={[{ required: true, message: 'Please input description!' }]}
+      >
+        <Input.TextArea />
+      </Form.Item>
+
+      <Form.Item
+        label="Image"
+        className='col-span-2'
+        name="image"
+        rules={[{ required: true, message: 'Please upload image!' }]}
+      >
+        <Upload>
+          <Button icon={<UploadOutlined />}>Upload</Button>
+        </Upload>
+      </Form.Item>
+
+      </div>
+   
+      <div className="mt-6 flex items-center justify-end gap-x-6">
+        <Button htmlType="button" onClick={handleCancel} className="text-base font-semibold leading-6 text-gray-900">
+          Cancel
+        </Button>
+        <Button
+        loading={addLoading}
+          type="primary"
+          htmlType="submit"
+          className="rounded-md bg-indigo-600 px-3 py-2 text-base font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        >
+          Add Product
+        </Button>
+      </div>
+    </Form>
+      </Modal>
+      <ProductTable products={productList}/>
     </>
   );
 }
+
+// const AddProduct = ({ onFinish, categories }) => {
+//   return (
+//     <Form
+//     layout='vertical'
+//       className="max-w-full p-10 mt-8 mb-4 shadow-md rounded bg-white"
+//       onFinish={onFinish}
+//     >
+//       <h2 className="text-3xl flex justify-center font-semibold leading-7 text-gray-900">
+//         Add New Product
+//       </h2>
+//       <div className='grid grid-cols-2 gap-4'>
+//       <Form.Item
+//         label="Product Name"
+//         className=''
+//         name="productName"
+//         rules={[{ required: true, message: 'Please input product name!' }]}
+//       >
+//         <Input />
+//       </Form.Item>
+
+//       <Form.Item
+//         label="Processor"
+//         name="processor"
+//         rules={[{ required: true, message: 'Please input processor!' }]}
+//       >
+//         <Input />
+//       </Form.Item>
+
+//       <Form.Item
+//         label="Brand"
+//         name="brand"
+//         rules={[{ required: true, message: 'Please select brand!' }]}
+//       >
+//         <Select>
+//           {categories.map((category) => (
+//             <Option key={category._id} value={category.category}>
+//               {category.category}
+//             </Option>
+//           ))}
+//         </Select>
+//       </Form.Item>
+
+//       <Form.Item
+//         label="Category"
+//         name="category"
+//         rules={[{ required: true, message: 'Please select category!' }]}
+//       >
+//         <Select>
+//           {categories.map((category) => (
+//             <Option key={category._id} value={category.subCategory}>
+//               {category.subCategory}
+//             </Option>
+//           ))}
+//         </Select>
+//       </Form.Item>
+
+//       <Form.Item
+//         label="Storage"
+//         name="storage"
+//         rules={[{ required: true, message: 'Please input storage!' }]}
+//       >
+//         <Input />
+//       </Form.Item>
+
+//       <Form.Item
+//         label="RAM"
+//         name="ram"
+//         rules={[{ required: true, message: 'Please input RAM!' }]}
+//       >
+//         <Input />
+//       </Form.Item>
+
+//       <Form.Item
+//         label="Available in Stock"
+//         name="stock"
+//         rules={[{ required: true, message: 'Please input stock!' }]}
+//       >
+//         <Input />
+//       </Form.Item>
+
+//       <Form.Item
+//         label="Price"
+//         name="price"
+//         rules={[{ required: true, message: 'Please input price!' }]}
+//       >
+//         <Input />
+//       </Form.Item>
+
+//       <Form.Item
+//         label="Product description"
+//         name="description"
+//         className='col-span-2'
+//         rules={[{ required: true, message: 'Please input description!' }]}
+//       >
+//         <Input.TextArea />
+//       </Form.Item>
+
+//       <Form.Item
+//         label="Image"
+//         className='col-span-2'
+//         name="image"
+//         rules={[{ required: true, message: 'Please upload image!' }]}
+//       >
+//         <Upload>
+//           <Button icon={<UploadOutlined />}>Upload</Button>
+//         </Upload>
+//       </Form.Item>
+
+//       </div>
+   
+//       <div className="mt-6 flex items-center justify-end gap-x-6">
+//         <Button htmlType="button" onClick={() => window.history.back()} className="text-base font-semibold leading-6 text-gray-900">
+//           Cancel
+//         </Button>
+//         <Button
+//           type="primary"
+//           htmlType="submit"
+//           className="rounded-md bg-indigo-600 px-3 py-2 text-base font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+//         >
+//           Add Product
+//         </Button>
+//       </div>
+//     </Form>
+//   );
+// };

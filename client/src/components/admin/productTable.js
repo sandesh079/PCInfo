@@ -1,98 +1,93 @@
 "use client";
-import React from 'react';
-import { Table } from 'antd';
-const columns = [
-  {
-    title: 'Name',
-    width: 100,
-    dataIndex: 'productName',
-    key: 'productName',
-    fixed: 'left',
-  },
-  {
-    title: 'Brand',
-    width: 100,
-    dataIndex: 'brand',
-    key: 'brand',
-    fixed: 'left',
-  },
-  {
-    title: 'Category',
-    width: 100,
-    dataIndex: 'category',
-    key: 'category',
-  }, 
-  {
-    title: 'Storage',
-    dataIndex: 'storage',
-    key: 'storage',
-    width: 150,
-  },
-  {
-    title: 'RAM',
-    dataIndex: 'ram',
-    key: 'ram',
-    width: 150,
-  },
-  {
-    title: 'Processor',
-    dataIndex: 'processor',
-    key: 'processor',
-    width: 150,
-  },
-  {
-    title: 'Available Stock',
-    dataIndex: 'stock',
-    key: 'stock',
-    width: 150,
-  },
-  {
-    title: 'Price',
-    dataIndex: 'price',
-    key: 'price',
-    width: 150,
-  },
-  {
-    title: 'Description',
-    dataIndex: 'description',
-    key: 'description',
-    width: 150,
-  },
-  {
-    title: 'Image',
-    dataIndex: 'image',
-    key: 'image',
-    width: 150,
-  },
-  {
-    title: 'Action',
-    key: 'operation',
-    fixed: 'right',
-    width: 100,
-    render: () => <a>Edit</a>,
-  },
-];
-const data = [];
-for (let i = 0; i < 50; i++) {
-  data.push({
-    key: i,
-    name: `Edward ${i}`,
-    age: 32,
-    address: `London Park no. ${i}`,
-  });
-}
-const ProductTable = () => {
+import React from "react";
+import { Table } from "antd";
+
+const ProductTable = ({ products }) => {
+  const columns = [
+    {
+      title: "Name",
+      dataIndex: "productName",
+      key: "productName",
+      fixed: "left",
+      width: "130px"
+    },
+    {
+      title: "Brand",
+      dataIndex: "brand",
+      key: "brand",
+      fixed: "left",
+      width: "100px"
+    },
+    {
+      title: "Category",
+      dataIndex: "category",
+      key: "category",
+      width: "150px"
+    },
+    {
+      title: "Storage",
+      dataIndex: "storage",
+      key: "storage",
+      width: "110px"
+    },
+    {
+      title: "RAM",
+      dataIndex: "ram",
+      key: "ram",
+      width: "130px"
+    },
+    {
+      title: "Processor",
+      dataIndex: "processor",
+      key: "processor",
+      width: "250px"
+    },
+    {
+      title: "Available Stock",
+      dataIndex: "stock",
+      key: "stock",
+      width: "130px"
+    },
+    {
+      title: "Price",
+      dataIndex: "price",
+      key: "price",
+      width: "100px"
+    },
+    {
+      title: "Description",
+      dataIndex: "description",
+      key: "description",
+      width: "200px"
+    },
+    {
+      title: "Image",
+      dataIndex: "image",
+      width: "130px",
+      key: "image",
+      render: (image) => (
+        <img src={image} alt="Product" style={{ width: "120px", height: "60px" }} />
+      ),
+    },
+    {
+      title: "Action",
+      key: "operation",
+      fixed: "right",
+      width: "100px",
+      render: () => <a>Edit</a>,
+    },
+  ];
+
   return (
     <div>
       <Table
-    columns={columns}
-    dataSource={data}
-    scroll={{
-      x: 1500,
-    }}
-  />
+        columns={columns}
+        dataSource={products}
+        scroll={{ x: 1500 }}
+        pagination={false}
+      />
     </div>
-  )
-}
+  );
+};
 
 export default ProductTable;
