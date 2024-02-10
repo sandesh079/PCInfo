@@ -3,7 +3,6 @@ const express = require('express')
 const connection = require('./db/connection')
 const app = express()
 const cors = require('cors')
-app.use(cors())
 app.use(express.json())
 require('dotenv').config()
 const userRoute = require('./routes/user')
@@ -24,6 +23,10 @@ const port = process.env.PORT
 app.get('/', (req, res) =>{
   res.json('Hello World!')
 })
+
+app.use(cors({
+  origin: 'https://pc-info.vercel.app/'
+}));
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
