@@ -14,4 +14,27 @@ const getAllProducts = async (req, res) => {
   res.json(productList);
 };
 
-module.exports = { addNewProducts, getAllProducts };
+const getProductById = async (req, res)=>{
+  try {
+    const {id} = req.params
+    const product = await Product.findById(id)
+    res.json(product)
+
+    if (!product){
+      return res.status(404).json({
+        message: "No product found"
+      })
+    }
+    res.status(200).json({
+      message: "Product fetched successfully",
+      product
+    })
+  } catch (error){
+    console.log(error)
+  }
+  
+}
+
+
+
+module.exports = { addNewProducts, getAllProducts, getProductById };
