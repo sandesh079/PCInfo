@@ -7,7 +7,7 @@ const HomeLayout = ({ children }) => {
     <div>
       <NavBar />
       {/* <section className="text-gray-600 body-font relative"> */}
-        <div className="container mx-auto">
+        <div className="">
           {children}
           <Footer />
         </div>

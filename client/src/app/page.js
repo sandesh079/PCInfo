@@ -42,6 +42,7 @@ const page = () => {
           );
         })}
       </Carousel>
+      <div className="container mx-auto">
       <h1 className="m-12 flex justify-center font-bold text-3xl">
         Products Overview
       </h1>
@@ -50,6 +51,8 @@ const page = () => {
         productList.map((item) => {
           return <Card item={item} />;
         })}
+      </div>
+      
     </HomeLayout>
   );
 };
