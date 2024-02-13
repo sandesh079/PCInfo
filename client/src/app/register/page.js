@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import * as Yup from "yup";
 import Link from "next/link";
 import URI from "@/config/api";
+import HomeLayout from "@/layout/HomeLayout";
 
 const page = () => {
   const router = useRouter();
@@ -37,6 +38,8 @@ const page = () => {
   };
 
   return (
+    <>
+    <HomeLayout>
     <div className="flex mt-12 min-w-full justify-center h-auto">
       <Formik
         initialValues={{
@@ -118,6 +121,9 @@ const page = () => {
         )}
       </Formik>
     </div>
+    </HomeLayout>
+    </>
+    
   );
 };
 

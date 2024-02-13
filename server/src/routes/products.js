@@ -1,6 +1,7 @@
 const express = require('express')
 router = express.Router()
 const {addNewProducts, getAllProducts, getProductById} = require('../controllers/products')
+
 const uploadMiddleware = require('../middleware/fileUpload')
 const {authentication,authorization} = require('../middleware/authmiddleware.js')
 

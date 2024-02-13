@@ -15,17 +15,26 @@ const authentication = (req, res, next) => {
         } else {
             // If token is valid, you can attach the decoded payload to the request object
             req.user = decoded;
-            console.log(req.user)
             next();
         }
     });
 };
 const authorization = (req, res, next) => {
-if(req.user.role === "admin"){
-    return  next()
-}
-return res.json({msg: "Invalid"})
+    if (!req.user || !req.user.role) {
+        return res.status(401).json({ message: 'Unauthorized: Missing role information' });
+    }
 
+    // Check user role
+    if (req.user.role === 'admin') {
+        // If user is an admin, allow access to admin routes
+        next();
+    } else if (req.user.role === 'user') {
+        // If user is a regular user, restrict access to admin routes
+        return res.status(403).json({ message: 'Forbidden: Access denied for users' });
+    } else {
+        // If user has an unrecognized role, deny access
+        return res.status(403).json({ message: 'Forbidden: Unknown role' });
+    }
 };
 
-module.exports = {authentication,authorization};
+module.exports = { authentication, authorization };
