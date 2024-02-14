@@ -38,8 +38,6 @@ export default function Products() {
   };
 
   useEffect(() => {
-    // Fetch categories from server
-    
 
     fetchProducts();
 
@@ -97,6 +95,26 @@ export default function Products() {
     }
   };
 
+  const handleDeleteProduct = async (productId) => {
+    try {
+      const res = await fetch(`${URI}/products/${productId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: token,
+        },
+      });
+      const data = await res.json();
+      if (res.ok) {
+        fetchProducts();
+        message.success(data.message);
+      } else {
+        message.error(data.message);
+      }
+    } catch (error) {
+      console.error("Error deleting product:", error);
+      message.error("Error deleting product");
+    }
+  };
 
 
   return (
@@ -234,7 +252,7 @@ export default function Products() {
       </div>
     </Form>
       </Modal>
-      <ProductTable products={productList}/>
+      <ProductTable products={productList} onDelete={handleDeleteProduct}/>
     </>
   );
 }

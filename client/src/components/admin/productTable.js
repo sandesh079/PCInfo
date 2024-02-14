@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
-import { Table } from "antd";
+import { Table, Popconfirm, Button } from "antd";
 
-const ProductTable = ({ products }) => {
+const ProductTable = ({ products, onDelete }) => {
   const columns = [
     {
       title: "Name",
@@ -74,7 +74,18 @@ const ProductTable = ({ products }) => {
       key: "operation",
       fixed: "right",
       width: "100px",
-      render: () => <a>Edit</a>,
+      render: (_, record) => (
+        <Popconfirm
+          title="Are you sure you want to delete this product?"
+          onConfirm={() => onDelete(record._id)}
+          okText="Yes"
+          cancelText="No"
+        >
+          <Button type="link" danger>
+            Delete
+          </Button>
+        </Popconfirm>
+      ),
     },
   ];
 

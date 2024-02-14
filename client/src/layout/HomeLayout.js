@@ -7,13 +7,11 @@ const HomeLayout = ({ children }) => {
   return (
     <div>
       <NavBar />
-      {/* <section className="text-gray-600 body-font relative"> */}
         <div className="">
         <ToastContainer hideProgressBar theme="dark" />
           {children}
           <Footer />
         </div>
-      {/* </section> */}
     </div>
   );
 };

@@ -29,7 +29,6 @@ const authorization = (req, res, next) => {
         // If user is an admin, allow access to admin routes
         next();
     } else if (req.user.role === 'user') {
-        // If user is a regular user, restrict access to admin routes
         return res.status(403).json({ message: 'Forbidden: Access denied for users' });
     } else {
         // If user has an unrecognized role, deny access
