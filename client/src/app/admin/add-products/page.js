@@ -1,10 +1,12 @@
 'use client'
 import { Form, Input, Select, Button, Upload, message, Modal } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import URI from '@/config/api';
 import ProductTable from '@/components/admin/productTable';
 import { useSelector } from 'react-redux';
+import ProductForm from '@/components/admin/productForm';
+import AddProductForm from '@/components/admin/productForm';
 
 const { Option } = Select;
 
@@ -13,6 +15,8 @@ export default function Products() {
   const [addLoading,setAddLoading]= useState(false)
   const [productList, setProductList] = useState([]);
   const token = useSelector((state)=>state.user.token)
+  const [isAdd,setIsAdd] = useState(true);
+  const [productById, setProductById] = useState({})
 
   const fetchCategories = async () => {
     try {
@@ -36,6 +40,18 @@ export default function Products() {
       console.error("Error fetching products:", error);
     }
   };
+  const defaultProductValues = {
+    productName: "",
+    brand: "",
+    category:"",
+    storage:"",
+    ram: "",    
+    processor: "",
+    stock: "",
+    price: "",
+    description: "",
+    image: "",
+  }
 
   useEffect(() => {
 
@@ -94,6 +110,14 @@ export default function Products() {
       message.error("Error adding product");
     }
   };
+  const getById = (values)=>{
+    setProductById(values);
+   setIsAdd(false)
+    showModal()
+  }
+  const handleEdit = async(values)=>{
+    debugger
+  }
 
   const handleDeleteProduct = async (productId) => {
     try {
@@ -119,140 +143,27 @@ export default function Products() {
 
   return (
     <>
-  
-      <div className="mt-5 mb-8">
-        {/* Products Table component goes here */}
-      </div>
-      <Button className="rounded-md bg-indigo-600  text-base font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" onClick={showModal}>
-        ADD PRODUCTS
+      <Button type='primary' className="rounded-md bg-indigo-600 text-base font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 mb-4 focus-visible:outline-indigo-600" onClick={()=>{
+        setIsAdd(true)
+        showModal()
+      }}>
+        ADD NEW PRODUCTS
       </Button>
       <Modal 
       footer={false}
       open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-      <Form
-    layout='vertical'
-      className="max-w-full  "
-      onFinish={onFinish}
-    >
-      <h2 className="text-3xl p-4 flex justify-center font-semibold leading-7 text-gray-900">
-        Add New Product
-      </h2>
-      <div className='grid grid-cols-2 gap-4'>
-      <Form.Item
-        label="Product Name"
-        className=''
-        name="productName"
-        rules={[{ required: true, message: 'Please input product name!' }]}
-      >
-        <Input />
-      </Form.Item>
 
-      <Form.Item
-        label="Processor"
-        name="processor"
-        rules={[{ required: true, message: 'Please input processor!' }]}
-      >
-        <Input />
-      </Form.Item>
-
-      <Form.Item
-        label="Brand"
-        name="brand"
-        rules={[{ required: true, message: 'Please select brand!' }]}
-      >
-        <Select>
-          {categories.map((category) => (
-            <Option key={category._id} value={category.category}>
-              {category.category}
-            </Option>
-          ))}
-        </Select>
-      </Form.Item>
-
-      <Form.Item
-        label="Category"
-        name="category"
-        rules={[{ required: true, message: 'Please select category!' }]}
-      >
-        <Select>
-          {categories.map((category) => (
-            <Option key={category._id} value={category.subCategory}>
-              {category.subCategory}
-            </Option>
-          ))}
-        </Select>
-      </Form.Item>
-
-      <Form.Item
-        label="Storage"
-        name="storage"
-        rules={[{ required: true, message: 'Please input storage!' }]}
-      >
-        <Input />
-      </Form.Item>
-
-      <Form.Item
-        label="RAM"
-        name="ram"
-        rules={[{ required: true, message: 'Please input RAM!' }]}
-      >
-        <Input />
-      </Form.Item>
-
-      <Form.Item
-        label="Available in Stock"
-        name="stock"
-        rules={[{ required: true, message: 'Please input stock!' }]}
-      >
-        <Input />
-      </Form.Item>
-
-      <Form.Item
-        label="Price"
-        name="price"
-        rules={[{ required: true, message: 'Please input price!' }]}
-      >
-        <Input />
-      </Form.Item>
-
-      <Form.Item
-        label="Product description"
-        name="description"
-        className='col-span-2'
-        rules={[{ required: true, message: 'Please input description!' }]}
-      >
-        <Input.TextArea />
-      </Form.Item>
-
-      <Form.Item
-        label="Image"
-        className='col-span-2'
-        name="image"
-        rules={[{ required: true, message: 'Please upload image!' }]}
-      >
-        <Upload>
-          <Button icon={<UploadOutlined />}>Upload</Button>
-        </Upload>
-      </Form.Item>
-
-      </div>
-   
-      <div className="mt-6 flex items-center justify-end gap-x-6">
-        <Button htmlType="button" onClick={handleCancel} className="text-base font-semibold leading-6 text-gray-900">
-          Cancel
-        </Button>
-        <Button
-        loading={addLoading}
-          type="primary"
-          htmlType="submit"
-          className="rounded-md bg-indigo-600 px-3 py-2 text-base font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-        >
-          Add Product
-        </Button>
-      </div>
-    </Form>
+          <AddProductForm categories={categories}
+          handleCancel={handleCancel}
+          title={'Add New'}
+          handleFinish={onFinish}
+          addLoading={addLoading}
+          />
+       
       </Modal>
-      <ProductTable products={productList} onDelete={handleDeleteProduct}/>
+      <ProductTable setIsAdd = {setIsAdd} products={productList} onDelete={handleDeleteProduct}
+      categories={categories}
+      />
     </>
   );
 }
