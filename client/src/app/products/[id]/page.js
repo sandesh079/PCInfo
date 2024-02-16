@@ -139,7 +139,9 @@ export default function Products({ params }) {
                 </p>
                 <div className="flex border-t border-gray-200 py-2">
                   <span className="text-gray-500">Storage</span>
-                  <span className="ml-auto text-gray-900">{product?.storage}</span>
+                  <span className="ml-auto text-gray-900">
+                    {product?.storage}
+                  </span>
                 </div>
                 <div className="flex border-t border-gray-200 py-2">
                   <span className="text-gray-500">RAM</span>
@@ -147,13 +149,15 @@ export default function Products({ params }) {
                 </div>
                 <div className="flex border-t border-b mb-6 border-gray-200 py-2">
                   <span className="text-gray-500">Available in stock</span>
-                  <span className="ml-auto text-gray-900">{product?.stock}</span>
+                  <span className="ml-auto text-gray-900">
+                    {product?.stock}
+                  </span>
                 </div>
                 <div className="flex">
-                  <span className="title-font font-medium text-2xl text-gray-900">
+                  <span className="text-3xl font-bold text-blue-700">
                     NPR. {product?.price}
                   </span>
-                  <button className="flex ml-auto text-white bg-indigo-700 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-800 rounded">
+                  <button className="flex ml-auto text-white bg-blue-800 border-0 py-2 px-6 focus:outline-none hover:bg-blue-700 rounded">
                     BUY
                   </button>
                   <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">

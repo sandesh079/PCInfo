@@ -1,9 +1,8 @@
-'use client'
-import React, { useEffect, useState } from 'react'
+"use client";
+import React, { useEffect, useState } from "react";
 import Card from "@/components/product-card/page";
-import URI from '@/config/api';
-import HomeLayout from '@/layout/HomeLayout';
-
+import URI from "@/config/api";
+import HomeLayout from "@/layout/HomeLayout";
 
 const AllProducts = () => {
   const [productList, setProductList] = useState([]);
@@ -17,15 +16,13 @@ const AllProducts = () => {
   }, []);
   return (
     <HomeLayout>
-
-<div className='mt-5'>
+      <div className="mt-5">
         {productList.map((item) => {
           return <Card item={item} />;
-      })}
-    </div>
+        })}
+      </div>
     </HomeLayout>
+  );
+};
 
-  )
-}
-
-export default AllProducts
+export default AllProducts;

@@ -1,14 +1,11 @@
 'use client'
-import { Form, Input, Select, Button, Upload, message, Modal } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
+import { Button, message, Modal } from 'antd';
 import React, { useState, useEffect } from 'react';
 import URI from '@/config/api';
 import ProductTable from '@/components/admin/productTable';
 import { useSelector } from 'react-redux';
-import ProductForm from '@/components/admin/productForm';
 import AddProductForm from '@/components/admin/productForm';
 
-const { Option } = Select;
 
 export default function Products() {
   const [categories, setCategories] = useState([]);
@@ -16,7 +13,6 @@ export default function Products() {
   const [productList, setProductList] = useState([]);
   const token = useSelector((state)=>state.user.token)
   const [isAdd,setIsAdd] = useState(true);
-  const [productById, setProductById] = useState({})
 
   const fetchCategories = async () => {
     try {
@@ -110,13 +106,34 @@ export default function Products() {
       message.error("Error adding product");
     }
   };
-  const getById = (values)=>{
-    setProductById(values);
-   setIsAdd(false)
-    showModal()
-  }
+
   const handleEdit = async(values)=>{
-    debugger
+
+    
+    let formData = new FormData();
+
+    formData.append("productName", values.productName);
+    formData.append("brand", values.brand);
+    formData.append("category", values.category);
+    formData.append("storage", values.storage);
+    formData.append("ram", values.ram);
+    formData.append("processor", values.processor);
+    formData.append("stock", values.stock);
+    formData.append("price", values.price);
+    formData.append("description", values.description);
+
+    formData.append("image", 
+    typeof values.image === 'string' ?
+    values.image : 
+     values.image.file.originFileObj);
+ 
+    let requestOptions = {
+      method: 'PUT',
+      body: formData,
+    };
+const res =  await fetch(`${URI}/products/${values._id}`, requestOptions)
+fetchProducts()
+  
   }
 
   const handleDeleteProduct = async (productId) => {
@@ -161,7 +178,8 @@ export default function Products() {
           />
        
       </Modal>
-      <ProductTable setIsAdd = {setIsAdd} products={productList} onDelete={handleDeleteProduct}
+      <ProductTable  products={productList} onDelete={handleDeleteProduct}
+      handleEdit={handleEdit}
       categories={categories}
       />
     </>

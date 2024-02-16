@@ -43,14 +43,16 @@ const page = () => {
         })}
       </Carousel>
       <div className="container mx-auto">
-      <h1 className="m-12 flex justify-center font-bold text-3xl">
+      <h1 className="m-12 flex justify-center  font-bold text-3xl">
         Products Overview
       </h1>
-
-      {productList.length > 0 &&
+       <div className="flex items-center gap-y-5 justify-between flex-wrap">
+       {productList.length > 0 &&
         productList.map((item) => {
           return <Card item={item} />;
         })}
+       </div>
+  
       </div>
       
     </HomeLayout>
