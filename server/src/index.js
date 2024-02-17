@@ -3,9 +3,7 @@ const express = require('express')
 const connection = require('./db/connection')
 const app = express()
 const cors = require('cors')
-app.use(cors({
-  origin: `${process.env.BASE_URL}`
-}))
+app.use(cors())
 app.use(express.json())
 require('dotenv').config()
 const userRoute = require('./routes/user')

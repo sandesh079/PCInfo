@@ -1,19 +1,18 @@
 "use client";
 import React from "react";
+import { FaCartShopping } from "react-icons/fa6";
 import {
   Navbar,
   Button,
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-  Input,
   DropdownItem,
   DropdownTrigger,
   Dropdown,
   DropdownMenu,
   Avatar,
 } from "@nextui-org/react";
-import Image from "next/image";
 import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "@/redux/reducerSlice/userSlice";
@@ -29,6 +28,8 @@ const NavBar = () => {
   }
   const LoggedInDrop = () => {
     return (
+      <div className="flex items-center">
+        <FaCartShopping className="text-slate-800 mx-8 size-7"/>
       <Dropdown placement="bottom-end">
         <DropdownTrigger>
           <Avatar
@@ -53,6 +54,7 @@ const NavBar = () => {
           </DropdownItem>
         </DropdownMenu>
       </Dropdown>
+      </div>
     );
   };
   const AuthButtons = () => {

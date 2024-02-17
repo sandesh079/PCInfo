@@ -28,10 +28,10 @@ export default function Products({ params }) {
                 src={product?.image}
               />
               <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
-                <h2 className="text-sm title-font text-gray-500 tracking-widest">
+                <h2 className="text-lg title-font text-gray-500 tracking-widest">
                   {product?.brand}
                 </h2>
-                <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
+                <h1 className="text-gray-900 text-4xl title-font font-medium mb-1">
                   {product?.productName}
                 </h1>
                 <div className="flex mb-4">
@@ -154,7 +154,7 @@ export default function Products({ params }) {
                   </span>
                 </div>
                 <div className="flex">
-                  <span className="text-3xl font-bold text-blue-700">
+                  <span className="text-2xl font-bold text-blue-700">
                     NPR. {product?.price}
                   </span>
                   <button className="flex ml-auto text-white bg-blue-800 border-0 py-2 px-6 focus:outline-none hover:bg-blue-700 rounded">

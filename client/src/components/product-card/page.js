@@ -1,9 +1,7 @@
 "use client";
 import React from "react";
-import { Card } from "antd";
 import Link from "next/link";
 
-const { Meta } = Card;
 const ProductCard = (props) => {
   return (
     <Link
