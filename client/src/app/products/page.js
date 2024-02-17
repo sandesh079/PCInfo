@@ -16,7 +16,7 @@ const AllProducts = () => {
   }, []);
   return (
     <HomeLayout>
-      <div className="mt-5">
+      <div className="flex items-center m-6 gap-y-5 justify-between flex-wrap">
         {productList.map((item) => {
           return <Card item={item} />;
         })}
