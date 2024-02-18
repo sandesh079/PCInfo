@@ -40,8 +40,8 @@ const ProductCard = (props) => {
             <span className="text-sm  text-slate-900 line-through">$699</span>
           </p>
         </div>
-        <a
-          href="#"
+        <Link
+          href="/cart"
           className="flex items-center justify-center rounded-md bg-blue-800 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300"
         >
           <svg
@@ -59,7 +59,7 @@ const ProductCard = (props) => {
             />
           </svg>
           Add to cart
-        </a>
+        </Link>
       </div>
     </Link>
   );

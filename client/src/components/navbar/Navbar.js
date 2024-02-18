@@ -29,7 +29,6 @@ const NavBar = () => {
   const LoggedInDrop = () => {
     return (
       <div className="flex items-center">
-        <FaCartShopping className="text-slate-800 mx-8 size-7"/>
       <Dropdown placement="bottom-end">
         <DropdownTrigger>
           <Avatar
@@ -93,8 +92,14 @@ const NavBar = () => {
           </NavbarItem>
         </NavbarContent>
       </NavbarContent>
-
+      <NavbarContent as="div" className="items-center " justify="end">
+        <Link href={'/cart'}>
+          <FaCartShopping size={20} className="text-slate-900 mx-8"/>
+          </Link>
+        </NavbarContent>
+      
       <NavbarContent as="div" className="items-center" justify="end">
+      
         {isLoggedIn ? <LoggedInDrop /> : <AuthButtons />}
       </NavbarContent>
     </Navbar>
