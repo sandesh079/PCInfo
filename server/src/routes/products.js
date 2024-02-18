@@ -11,7 +11,7 @@ router.get('/products', getAllProducts)
 
 router.get('/products/:id', getProductById)
 
-router.put('/products/:id', uploadMiddleware.single('image'), updateProductById)
+router.put('/products/:id',authentication,authorization, uploadMiddleware.single('image'), updateProductById)
 
 router.delete('/products/:id',authentication,authorization, deleteProductById);
 
